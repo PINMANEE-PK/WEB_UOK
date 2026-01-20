@@ -1,0 +1,441 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ยู.โอเค รีสอร์ท - U.OK Co., Ltd.{% endblock %}
+
+{% block content %}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Tinos', serif;
+        margin: 0;
+        background: linear-gradient(135deg, #fff5f5 0%, #ffebeb 100%);
+        min-height: 100vh;
+        overflow-x: hidden; /* ป้องกันสกรอลแนวนอนตอนอนิเมชั่น */
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+    }
+
+    .text-gradient-red {
+        background: linear-gradient(45deg, #8B0000, #ff4d4d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: #b30000;
+    }
+
+    .product-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(139, 0, 0, 0.1);
+        padding-bottom: 30px;
+    }
+
+    .product-title {
+        font-size: 52px;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.1;
+    }
+
+    .product-subtitle {
+        font-size: 24px;
+        font-weight: 400;
+        color: #888;
+        margin-top: 10px;
+        font-style: italic;
+    }
+
+    .product-price {
+        font-size: 28px;
+        font-weight: 700;
+        color: #d32f2f;
+    }
+
+    .hero-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    .hero-image-container {
+        position: relative;
+        text-align: center;
+    }
+
+    .hero-image {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        border-radius: 18px;
+        box-shadow: 0 15px 35px rgba(139, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+    }
+    
+    .hero-image:hover {
+        transform: scale(1.01);
+    }
+
+    .product-details {
+        padding-top: 20px;
+    }
+
+    .description {
+        font-size: 19px;
+        line-height: 1.7;
+        color: #444;
+        margin-bottom: 40px;
+    }
+
+    .back-button {
+        display: inline-block;
+        padding: 12px 30px;
+        background: linear-gradient(to right, #b71c1c, #e53935);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 400;
+        font-family: 'Tinos', serif;
+        box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .back-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(211, 47, 47, 0.5);
+    }
+
+    .related-section {
+        margin-top: 100px;
+    }
+
+    .related-title {
+        font-size: 34px;
+        font-weight: 700;
+        margin-bottom: 40px;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .related-card {
+        display: block; 
+        background-color: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        text-align: center;
+        padding: 30px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(139, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .related-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(139, 0, 0, 0.3);
+        box-shadow: 0 15px 30px rgba(139, 0, 0, 0.1);
+    }
+
+    .related-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        background-color: #fce4ec; 
+    }
+
+    .related-name {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0 0 10px;
+        color: #8B0000;
+    }
+
+    .related-description {
+        font-size: 16px;
+        color: #666;
+    }
+
+    /* --- ส่วนแผนที่ --- */
+    .map-section {
+        margin-top: 100px;
+        text-align: center;
+    }
+
+    .map-container {
+        width: 100%;
+        height: 450px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(139, 0, 0, 0.1);
+        border: 1px solid rgba(139, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .map-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    /* --- ส่วน Footer (ติดต่อ + Social) --- */
+    .footer-section {
+        margin-top: 80px;
+        padding-top: 50px;
+        border-top: 1px solid rgba(139, 0, 0, 0.1);
+        text-align: center;
+        padding-bottom: 40px;
+    }
+
+    .contact-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        color: #555;
+        text-decoration: none;
+        padding: 10px 20px;
+        background: white;
+        border-radius: 50px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(139, 0, 0, 0.05);
+    }
+
+    .contact-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(139, 0, 0, 0.1);
+        color: #b30000;
+        border-color: rgba(139, 0, 0, 0.2);
+    }
+
+    .contact-item svg {
+        width: 24px;
+        height: 24px;
+        fill: #d32f2f;
+    }
+
+    .social-icons-container {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        font-size: 24px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .social-btn:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .social-btn svg {
+        width: 28px;
+        height: 28px;
+        fill: currentColor;
+    }
+
+    .bg-tiktok { background-color: #000000; }
+    .bg-facebook { background-color: #1877F2; }
+    .bg-instagram { 
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); 
+    }
+
+</style>
+
+<div class="container">
+    <div class="product-header">
+        <div data-aos="fade-right" data-aos-duration="1000">
+            <h1 class="product-title text-gradient-red">ยู.โอเค รีสอร์ท</h1>
+            <p class="product-subtitle">U.OK Resort</p>
+        </div>
+        <div class="product-price text-gradient-red" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+            เริ่มต้นที่ ฿ 500 / คืน
+        </div>
+    </div>
+
+    <div class="hero-section">
+        <div class="hero-image-container" data-aos="zoom-in" data-aos-duration="1200">
+            <img src="{% static 'images/resort.jpg' %}" alt="ยู.โอเค รีสอร์ท" class="hero-image">
+        </div>
+        <div class="product-details" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+            <p class="description">
+                รีสอร์ทบรรยากาศร่มรื่น เหมาะสำหรับการพักผ่อนทั้งแบบส่วนตัวและครอบครัว เดินทางสะดวก
+                ตั้งอยู่ใกล้เส้นทางคมนาคมหลัก มีรถสาธารณะผ่านหน้ารีสอร์ท ใกล้ห้างพันทิพย์ ใกล้เดอะมอลล์ งามวงศ์วาน 
+                รองรับทั้งลูกค้าที่มีรถส่วนตัวและไม่มีรถได้อย่างสบาย ให้บริการห้องพักรายวัน 
+                พร้อมสิ่งอำนวยความสะดวกครบครัน ในราคาสบายกระเป๋า บรรยากาศเงียบสงบ ร่มรื่น เป็นส่วนตัว
+                เหมาะสำหรับทั้งการพักผ่อนระยะสั้นและระยะยาว
+            </p>
+            <a href="{% url 'home' %}" class="back-button">กลับหน้าหลัก</a>
+        </div>
+    </div>
+
+    <div class="related-section">
+        <h2 class="related-title text-gradient-red" data-aos="fade-right" data-aos-duration="1000">รายละเอียดแต่ละห้อง</h2>
+        <div class="related-grid">
+            
+            <a href="{% url 'room_detail' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">
+                <div class="amenity-icon">🛌</div>
+                <div class="related-image">
+                     <img src="{% static 'images/room_standard.jpg' %}" alt="Single Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                </div>
+                <h3 class="related-name">Single Room</h3>
+                <p class="related-description">สะอาด ปลอดภัย พักผ่อนสบาย</p>
+            </a>
+
+            <a href="{% url 'room_2a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                <div class="amenity-icon">🛌</div>
+                <div class="related-image">
+                     <img src="{% static 'images/room_villa.jpg' %}" alt="Superior Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                </div>
+                <h3 class="related-name">Superior Room</h3>
+                <p class="related-description">วิลล่าส่วนตัวพร้อมสระว่ายน้ำ</p>
+            </a>
+
+            <a href="{% url 'room_3a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="amenity-icon">🛌</div>
+                <div class="related-image">
+                     <img src="{% static 'images/room_deluxe.jpg' %}" alt="Deluxe Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                </div>
+                <h3 class="related-name">Deluxe Room</h3>
+                <p class="related-description">อาหารอร่อย บรรยากาศดี</p>
+            </a>
+
+            <a href="{% url 'room_4a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                <div class="amenity-icon">🛌</div>
+                <div class="related-image">
+                     <img src="{% static 'images/room_queen.jpg' %}" alt="Queen Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                </div>
+                <h3 class="related-name">Queen Room</h3>
+                <p class="related-description">ผ่อนคลายร่างกายและจิตใจ</p>
+            </a>
+
+            <a href="{% url 'room_5a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                <div class="amenity-icon">🛌</div>
+                <div class="related-image">
+                     <img src="{% static 'images/room_king.jpg' %}" alt="King Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                </div>
+                <h3 class="related-name">King Room</h3>
+                <p class="related-description">พายเรือและกิจกรรมสันทนาการ</p>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="map-section">
+        <h2 class="related-title text-gradient-red" data-aos="fade-right">แผนที่และการเดินทาง</h2>
+        
+        <div class="map-container" data-aos="zoom-in" data-aos-duration="1200">
+            <iframe 
+                src="https://maps.google.com/maps?q=U.OK+Resort+Ngamwongwan+8&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+        <div class="map-buttons" data-aos="fade-up" data-aos-delay="200">
+            <a href="https://maps.app.goo.gl/5qSMEA9Q7eW2nf3d9" target="_blank" class="back-button">
+                ดูใน Google Maps
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <h2 class="related-title text-gradient-red" style="font-size: 28px;" data-aos="fade-down">ติดต่อเรา & ติดตามข่าวสาร</h2>
+        
+        <div class="contact-container" data-aos="fade-up" data-aos-duration="1000">
+            <a href="tel:0655183646" class="contact-item">
+                <svg viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
+                065-518-3646
+            </a>
+            
+            <a href="tel:0939395199" class="contact-item">
+                <svg viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
+                093-939-5199
+            </a> 
+
+            <a href="tel:0635159926" class="contact-item">
+                <svg viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
+                063-515-9926
+            </a>
+
+            <a href="mailto:uokresort@gmail.com" class="contact-item">
+                <svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
+                uokresort@gmail.com
+            </a>
+        </div>
+
+        <div class="social-icons-container" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+            <a href="https://www.tiktok.com/@u.okresort" target="_blank" class="social-btn bg-tiktok" aria-label="TikTok">
+                <svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z"/></svg>
+            </a>
+
+            <a href="https://www.facebook.com/profile.php?id=61575930942400" target="_blank" class="social-btn bg-facebook" aria-label="Facebook">
+                <svg viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+            </a>
+
+            <a href="https://www.instagram.com/uok.resort?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-btn bg-instagram" aria-label="Instagram">
+                <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+      once: false, /* เล่น Animation ทุกครั้งที่เลื่อนผ่าน */
+      offset: 120, /* ระยะห่างก่อนเริ่ม Animation */
+  });
+</script>
+
+{% endblock %}

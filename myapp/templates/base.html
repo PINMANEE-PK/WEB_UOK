@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}U.OK Co., Ltd.{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            margin: 0; 
+            font-family: 'Tinos', serif;
+        }
+
+        /* --- 1. ส่วน Header (ด้านบน) --- */
+        header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 15px 40px; 
+            
+            /* ไล่สีพื้นหลังด้านบน (เหมือนด้านล่าง) */
+            background: linear-gradient(90deg, #da0505 0%, #ff8d8d 100%);
+            
+            /* เพิ่มเงาเล็กน้อยให้ดูมีมิติ */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            color: white; /* เปลี่ยนสีตัวหนังสือพื้นฐานเป็นขาว */
+        }
+
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: white; /* เปลี่ยนสีโลโก้เป็นขาวให้อ่านออกบนพื้นแดง */
+        }
+        
+        .logo img { 
+            height: 50px; 
+            border-radius: 5px; /* ลบมุมรูปโลโก้นิดนึงให้ดูนุ่มขึ้น */
+        }
+
+        nav a { 
+            margin: 0 12px; 
+            text-decoration: none; 
+            color: white; /* เปลี่ยนสีลิ้งค์เมนูเป็นขาว */
+            font-weight: 600; 
+            transition: opacity 0.3s;
+        }
+        
+        nav a:hover { 
+            text-decoration: underline; 
+            opacity: 0.8; /* เวลาเอาเมาส์ชี้ให้จางลงนิดหน่อย */
+        }
+
+        main { 
+            padding: 40px; 
+            min-height: 400px; 
+        }
+
+        /* --- 2. ส่วน Footer (ด้านล่าง) --- */
+        footer { 
+            /* ไล่สีพื้นหลังด้านล่าง */
+            background: linear-gradient(90deg, #da0505 0%, #ff8d8d 100%);
+            color: white; 
+            padding: 30px 40px; 
+            font-size: 14px; 
+        }
+        
+        footer h3 { margin-top: 0; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="{% static 'images/logouok.jpg' %}" alt="UOK Logo">
+        U.OK Co., Ltd.
+    </div>
+
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+        <a href="{% url 'shop' %}">Shop</a>
+    </nav>
+</header>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h3>ติดต่อเรา</h3>
+            <p>
+                <strong>ที่อยู่</strong><br>
+                222 ถนนงามวงศ์วาน ตำบลบางเขน<br>
+                อำเภอเมืองนนทบุรี จังหวัดนนทบุรี 11000
+            </p>
+        </div>
+        <div>
+            <h3>ติดต่อ</h3>
+            <p>
+                โทร: 093-939-5199, 063-515-9926, 065-518-3646
+            </p>
+            <p>
+                อีเมล: u.ok.corporate@gmail.com
+            </p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

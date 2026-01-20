@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+    /* ปลดล็อคขอบขาวเฉพาะหน้านี้ */
+    main {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100%;
+        overflow-x: hidden; /* ป้องกันสกรอลแนวนอนตอนอนิเมชั่น */
+    }
+
+    /* Hero Section */
+    .hero-container {
+        position: relative;
+        width: 100%;
+        
+        /* สัดส่วนภาพแนวยาว (Banner) */
+        aspect-ratio: 21 / 8; 
+        min-height: 400px;    
+
+        /* ใส่รูปพื้นหลัง */
+        background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url("{% static 'images/xd.jpg' %}") no-repeat center center;
+        
+        /* บังคับให้รูปยืดเต็มกล่อง */
+        background-size: 100% 100%; 
+        
+        display: flex;
+        align-items: center;  
+        padding-left: 80px;
+        box-sizing: border-box;
+    }
+
+    /* กล่องข้อความ */
+    .hero-overlay-text {
+        background: rgba(255, 255, 255, 0.90); 
+        padding: 30px 50px;
+        border-radius: 4px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border-left: 6px solid #d32f2f;
+        max-width: 500px; 
+    }
+
+    /* ไล่สีตัวหนังสือหัวข้อ */
+    .hero-overlay-text h1 {
+        font-size: 56px; 
+        font-weight: 900;
+        margin: 0;
+        line-height: 1.1;
+        
+        background: linear-gradient(45deg, #8B0000, #ff4d4d);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #8B0000; 
+    }
+
+    .hero-overlay-text p {
+        font-size: 28px;
+        color: #dc3545; 
+        margin: 10px 0 0;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    /* ปุ่ม Chat */
+    .chat-button {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(45deg, #d32f2f, #ff1744);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5);
+        z-index: 999;
+        transition: transform 0.3s ease;
+    }
+
+    .chat-button:hover {
+        transform: scale(1.08);
+    }
+    
+    /* Responsive มือถือ */
+    @media (max-width: 768px) {
+        .hero-container {
+            aspect-ratio: auto; 
+            min-height: 450px;
+            padding-left: 0;
+            justify-content: center;
+            background-size: cover; 
+        }
+        .hero-overlay-text {
+            margin: 20px;
+            padding: 25px;
+            text-align: center;
+            width: 80%;
+        }
+        .hero-overlay-text h1 {
+            font-size: 36px;
+        }
+    }
+</style>
+
+<div class="hero-container">
+    <div class="hero-overlay-text" data-aos="fade-right" data-aos-duration="1500">
+        <h1>บริษัท ยู.โอเค จำกัด</h1>
+        <p>U.OK Co., Ltd.</p>
+    </div>
+</div>
+
+<a href="#" class="chat-button">
+    <span>💬</span> Let's Chat!
+</a>
+
+<div style="padding: 60px 20px; text-align: center; background-color: #fff; min-height: 300px;">
+    
+    <h2 data-aos="fade-up" data-aos-duration="1000" 
+        style="font-size: 38px; font-weight: 800; margin-bottom: 20px; background: linear-gradient(to right, #8B0000, #ff4d4d); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        ยินดีต้อนรับสู่ U.OK Co., Ltd.
+    </h2>
+
+    <p data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200"
+       style="font-size: 18px; color: #666; max-width: 800px; margin: 0 auto;">
+        เราพร้อมให้บริการและดูแลคุณด้วยความเป็นมืออาชีพ
+    </p>
+
+    <div data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="400"
+         style="width: 80px; height: 5px; background: #dc3545; margin: 30px auto; border-radius: 2px;"></div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+      once: false, /* ถ้าอยากให้เลื่อนลงแล้วเล่นทีเดียวเปลี่ยนเป็น true */
+  });
+</script>
+
+{% endblock %}

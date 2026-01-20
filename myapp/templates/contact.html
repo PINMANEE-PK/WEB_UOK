@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}ติดต่อเรา - My Shop{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS เฉพาะหน้า Contact */
+    .contact-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* แบ่งครึ่งหน้าจอ */
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    /* ส่วนฟอร์มติดต่อ */
+    .contact-form {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-group input, 
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .submit-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+        background-color: #2980b9;
+    }
+
+    /* ส่วนข้อมูลติดต่อ */
+    .contact-info h2 {
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
+
+    .info-item {
+        margin-bottom: 25px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .info-item span {
+        font-size: 1.5rem;
+        margin-right: 15px;
+    }
+
+    /* ปรับแต่งสำหรับมือถือ */
+    @media (max-width: 768px) {
+        .contact-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="contact-container">
+    
+    <div class="contact-info">
+        <h2>ติดต่อเรา</h2>
+        <p style="margin-bottom: 30px; color: #666;">หากคุณมีข้อสงสัยหรือต้องการสอบถามข้อมูลเพิ่มเติม สามารถส่งข้อความหาเราได้ทันที</p>
+        
+        <div class="info-item">
+            <span>📍</span>
+            <div>
+                <strong>ที่อยู่:</strong><br>
+                222 ถนนงามวงศ์วาน แขวง/ตำบล บางเขน เขต/อำเภอ เมืองนนทบุรี นนทบุรี 11000
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span>📞</span>
+            <div>
+                <strong>เบอร์โทรศัพท์:</strong><br>
+                098-159-6636 หรือ 093-939-5199
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span>✉️</span>
+            <div>
+                <strong>อีเมล:</strong><br>
+                support@yourshop.com
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-form">
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="name">ชื่อ-นามสกุล</label>
+                <input type="text" id="name" name="name" placeholder="กรอกชื่อของคุณ" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">อีเมลติดต่อ</label>
+                <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">หัวข้อเรื่อง</label>
+                <input type="text" id="subject" name="subject" placeholder="ติดต่อเรื่องอะไร" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">ข้อความ</label>
+                <textarea id="message" name="message" rows="5" placeholder="เขียนรายละเอียดที่นี่..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">ส่งข้อความ</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

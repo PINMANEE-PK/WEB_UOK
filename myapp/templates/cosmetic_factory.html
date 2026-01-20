@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}โรงงานผลิตเครื่องสำอาง - U.OK Co., Ltd.{% endblock %}
+
+{% block content %}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --swiper-theme-color: #d32f2f; /* เปลี่ยนสีลูกศรเป็นแดง */
+    }
+
+    body {
+        font-family: 'Tinos', serif;
+        margin: 0;
+        background: linear-gradient(135deg, #fff5f5 0%, #ffebeb 100%);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+    }
+
+    /* --- Typography & Gradients --- */
+    .text-gradient-red {
+        background: linear-gradient(45deg, #8B0000, #ff4d4d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: #b30000;
+    }
+
+    .product-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(139, 0, 0, 0.1);
+        padding-bottom: 30px;
+    }
+
+    .product-title {
+        font-size: 52px;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.1;
+    }
+
+    .product-subtitle {
+        font-size: 24px;
+        font-weight: 400;
+        color: #888;
+        margin-top: 10px;
+        font-style: italic;
+    }
+
+    /* --- Hero Section & Swiper --- */
+    .hero-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .hero-image-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3; /* สัดส่วนภาพ */
+        overflow: hidden;
+        border-radius: 24px;
+        box-shadow: 0 20px 50px -12px rgba(139, 0, 0, 0.15);
+        background-color: #fff;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* ให้ภาพเต็มกรอบสวยงาม */
+        transition: transform 0.5s ease;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        color: #d32f2f;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(5px);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .swiper-button-next::after, .swiper-button-prev::after {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .product-details {
+        padding-top: 20px;
+    }
+
+    .description {
+        font-size: 19px;
+        line-height: 1.8;
+        color: #444;
+        margin-bottom: 40px;
+    }
+
+    .back-button {
+        display: inline-block;
+        padding: 12px 35px;
+        background: linear-gradient(to right, #b71c1c, #e53935);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-size: 18px;
+        font-family: 'Tinos', serif;
+        box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(211, 47, 47, 0.5);
+    }
+
+    /* --- Related / Product Types Section --- */
+    .related-section {
+        margin-top: 100px;
+    }
+
+    .related-title {
+        font-size: 34px;
+        font-weight: 700;
+        margin-bottom: 40px;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .related-card {
+        background-color: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        text-align: center;
+        padding: 25px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(139, 0, 0, 0.08);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+    }
+
+    .related-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(139, 0, 0, 0.1);
+    }
+
+    .related-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        background-color: #fce4ec; 
+    }
+
+    .related-name {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 8px;
+        color: #8B0000;
+    }
+
+    .related-description {
+        font-size: 15px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        .product-title { font-size: 36px; }
+        .hero-image-container { aspect-ratio: 16/9; }
+    }
+</style>
+
+<div class="container">
+    <div class="product-header">
+        <div data-aos="fade-right" data-aos-duration="1000">
+            <h1 class="product-title text-gradient-red">โรงงานผลิตเครื่องสำอาง</h1>
+            <p class="product-subtitle">Cosmetics Production Factory (OEM/ODM)</p>
+        </div>
+        <div class="product-price text-gradient-red"></div>
+    </div>
+
+    <div class="hero-section">
+        <div class="hero-image-container" data-aos="zoom-in" data-aos-duration="1200">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="{% static 'images/cosmetic_factory.jpg' %}" alt="ไลน์ผลิตเครื่องสำอาง 1">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{% static 'images/cosmetic_lab.jpg' %}" alt="ห้องแล็บวิจัย">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="{% static 'images/cream_filling.jpg' %}" alt="เครื่องบรรจุครีม">
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+        <div class="product-details" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <p class="description">
+                เราคือโรงงานรับผลิตเครื่องสำอางครบวงจรที่ดำเนินงานภายใต้มาตรฐานสากลอย่าง <strong>ASEAN GMP</strong> และ <strong>ISO 22716</strong> 
+                โดยมุ่งเน้นการผลิตที่สะอาดและปลอดภัยสูงสุดผ่านระบบการผลิตแบบปิดที่ทันสมัย 
+                <br><br>
+                จุดเด่นสำคัญของเราคือการเป็นโรงงานที่ได้รับรอง <strong>มาตรฐานฮาลาล</strong> อย่างเต็มรูปแบบ 
+                ซึ่งควบคุมตั้งแต่การคัดสรรวัตถุดิบที่ปราศจากสารต้องห้ามตามหลักศาสนา 
+                พร้อมทีมวิจัยและพัฒนาผลิตภัณฑ์ (R&D) ที่เชี่ยวชาญในการสร้างสรรค์สูตรเครื่องสำอางจากสารสกัดธรรมชาติ
+            </p>
+            <a href="{% url 'home' %}" class="back-button">กลับหน้าหลัก</a>
+        </div>
+    </div>
+
+    <div class="related-section">
+        <h2 class="related-title text-gradient-red" data-aos="fade-right">กลุ่มผลิตภัณฑ์ที่รับผลิต</h2>
+        <div class="related-grid">
+            <div class="related-card" data-aos="fade-up" data-aos-delay="0">
+                <img src="{% static 'images/product_cream.jpg' %}" alt="ครีมและโลชั่น" class="related-image">
+                <h3 class="related-name">Skin Care (ครีม/โลชั่น)</h3>
+                <p class="related-description">บำรุงผิวหน้าและผิวกาย สูตรกระจ่างใส ลดริ้วรอย</p>
+            </div>
+
+            <div class="related-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="{% static 'images/product_serum.jpg' %}" alt="เซรั่ม" class="related-image">
+                <h3 class="related-name">Serum & Essence</h3>
+                <p class="related-description">เซรั่มเข้มข้น สารสกัดนำเข้า ซึมซาบไว</p>
+            </div>
+
+            <div class="related-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="{% static 'images/product_soap.jpg' %}" alt="สบู่และทำความสะอาด" class="related-image">
+                <h3 class="related-name">Cleansing & Soap</h3>
+                <p class="related-description">สบู่ก้อน เจลล้างหน้า โฟมทำความสะอาดผิว</p>
+            </div>
+
+            <div class="related-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="{% static 'images/product_sunscreen.jpg' %}" alt="กันแดด" class="related-image">
+                <h3 class="related-name">Sunscreen</h3>
+                <p class="related-description">กันแดดเนื้อมูส เนื้อน้ำนม ปกป้อง UVA/UVB</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+    // Init AOS
+    AOS.init({
+        once: false,
+        offset: 120,
+    });
+
+    // Init Swiper
+    var swiper = new Swiper(".mySwiper", {
+        loop: true,
+        spaceBetween: 20,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+    });
+</script>
+
+{% endblock %}

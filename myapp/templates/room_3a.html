@@ -1,0 +1,421 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}รายละเอียด - {{ room.name }}{% endblock %}
+
+{% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+    /* --- CSS หลัก --- */
+    :root {
+        --primary-red: #d32f2f;
+        --dark-red: #8B0000;
+        --bg-color: #fbfbfd;
+        --card-bg: #ffffff;
+        --border-color: #d2d2d7;
+    }
+    body {
+        background-color: var(--bg-color);
+        font-family: 'Tinos', serif; 
+        color: #1d1d1f;
+    }
+    .main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+    .product-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    /* --- ส่วน Slider รูปภาพ (สไตล์ Apple) --- */
+    .gallery-column {
+        position: sticky;
+        top: 40px;
+        border-radius: 24px;
+        overflow: hidden; 
+        /* ลบ box-shadow ออกเพื่อให้ดูคลีนเหมือนในคลิป หรือจะเก็บไว้ก็ได้ครับ */
+        /* box-shadow: 0 10px 30px rgba(0,0,0,0.08); */
+        position: relative;
+        background: #f5f5f7; /* สีพื้นหลังเผื่อโหลดรูปไม่ทัน */
+    }
+
+    .slider-container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .slider-track {
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Animation นุ่มๆ แบบ Apple */
+        width: 100%;
+    }
+
+    .slide-item {
+        min-width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .main-image {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+        /* ปรับสัดส่วนภาพตามต้องการ เช่น 4/3 หรือ ปล่อย auto */
+        aspect-ratio: 4/3; 
+    }
+
+    /* --- ปุ่มลูกศร (ปรับแต่งตามรูปที่ส่งมา) --- */
+    .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;  /* ขนาดปุ่ม */
+        height: 48px;
+        border-radius: 50%;
+        background-color: rgba(230, 230, 235, 0.9); /* สีเทาอ่อนจางๆ */
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        z-index: 10;
+        backdrop-filter: blur(5px); /* เบลอฉากหลังปุ่มนิดๆ */
+    }
+
+    /* Hover แล้วปุ่มเข้มขึ้นนิดนึง */
+    .slider-btn:hover {
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: translateY(-50%) scale(1.05); /* ขยายเล็กน้อย */
+    }
+    
+    /* ไอคอนลูกศร (ใช้ SVG เพื่อความคมชัด) */
+    .slider-btn svg {
+        width: 14px;
+        height: 14px;
+        fill: none;
+        stroke: #1d1d1f; /* สีเส้นลูกศร (เทาเข้มเกือบดำ) */
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .prev-btn { 
+        left: 20px; 
+        /* ซ่อนปุ่มซ้ายโดย Default (สำหรับรูปแรก) */
+        display: none; 
+    }
+    
+    .next-btn { 
+        right: 20px; 
+        display: flex; /* แสดงปุ่มขวาเสมอในตอนแรก */
+    }
+
+    /* Class สำหรับซ่อนปุ่มเมื่อจำเป็น */
+    .slider-btn.hidden {
+        display: none !important;
+    }
+
+    /* --- ส่วนรายละเอียด --- */
+    .details-column {
+        padding-top: 20px;
+        padding-bottom: 100px;
+    }
+    .room-badge {
+        color: var(--primary-red);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+    .room-title {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1.1;
+        margin: 0 0 10px 0;
+        background: linear-gradient(45deg, var(--dark-red), var(--primary-red));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .room-price {
+        font-size: 24px;
+        color: #666;
+        margin-bottom: 30px;
+        font-style: italic;
+    }
+    .room-description {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #444;
+        margin-bottom: 40px;
+    }
+    .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .info-card {
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px;
+        background: white;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .info-icon-box {
+        width: 50px;
+        height: 50px;
+        background-color: #fcebeb;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--primary-red);
+        font-size: 24px;
+    }
+    .info-content h4 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #1d1d1f;
+    }
+    .info-content p {
+        margin: 5px 0 0;
+        font-size: 15px;
+        color: #666;
+    }
+    .action-buttons {
+        margin-top: 50px;
+    }
+    .book-button {
+        display: block;
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(to right, #b71c1c, #e53935);
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s;
+        box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+    }
+    .book-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(211, 47, 47, 0.4);
+    }
+    .amenities-section {
+        margin-top: 80px;
+        text-align: center;
+        padding: 60px 0;
+        border-top: 1px solid #eee;
+    }
+    .amenities-grid {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+    .amenity-item {
+        width: 120px;
+        text-align: center;
+    }
+    .amenity-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+        color: var(--dark-red);
+    }
+    @media (max-width: 768px) {
+        .product-layout {
+            grid-template-columns: 1fr;
+        }
+        .gallery-column {
+            position: relative;
+            top: 0;
+            margin-bottom: 30px;
+        }
+        .room-title {
+            font-size: 36px;
+        }
+    }
+</style>
+
+<div class="main-container">
+    <div class="product-layout">
+        
+        <div class="gallery-column">
+            <div class="slider-container">
+                <div class="slider-track" id="sliderTrack">
+                    <div class="slide-item">
+                        {% if room.image %}
+                            <img src="{{ room.image.url }}" alt="{{ room.name }}" class="main-image">
+                        {% else %}
+                            <img src="{% static 'images/1-1.jpg' %}" alt="Default Image" class="main-image">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="slide-item">
+                        <img src="{% static 'images/1-11.jpg' %}" alt="Gallery 2" class="main-image">
+                    </div>
+                    
+                    <div class="slide-item">
+                        <img src="{% static 'images/1-11.1.jpg' %}" alt="Gallery 3" class="main-image">
+                    </div>
+                </div>
+            </div>
+
+            <button class="slider-btn prev-btn" id="prevBtn" onclick="moveSlide(-1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+            <button class="slider-btn next-btn" id="nextBtn" onclick="moveSlide(1)">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <div class="details-column">
+            <div class="room-badge">U.OK Resort</div>
+            
+            <h1 class="room-title">Deluxe Room{{ room.name }}</h1>
+            <p class="room-price">ราคา ฿ 600 {{ room.price|intcomma }} / คืน</p>
+
+            <div class="room-description">
+                {% if room.description %}
+                    {{ room.description|linebreaks }}
+                {% else %}
+                    ห้องพักมาตรฐาน สะอาด ปลอดภัย พร้อมสิ่งอำนวยความสะดวก
+                {% endif %}
+            </div>
+
+            <h3 class="section-title">รายละเอียดห้องพัก</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon-box">🛏️</div>
+                    <div class="info-content">
+                        <h4>ประเภทเตียง</h4>
+                        <p>เตียงเดี่ยว 5 ฟุต (5-foot Single Bed)</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon-box">📐</div>
+                    <div class="info-content">
+                        <h4>ขนาดห้อง</h4>
+                        <p>ห้องกว้างขวาง อยู่สบาย</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon-box">🏞️</div>
+                    <div class="info-content">
+                        <h4>วิวห้องพัก</h4>
+                        <p>วิวสวนร่มรื่น</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="https://lin.ee/l3pVJ5Q" class="book-button" target="_blank">จองห้องพักนี้</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="amenities-section">
+        <h2 style="font-size: 32px;">สิ่งอำนวยความสะดวก</h2>
+        <div class="amenities-grid">
+            <div class="amenity-item">
+                <div class="amenity-icon">📶</div> <p>Free Wi-Fi</p>
+            </div>
+            <div class="amenity-item">
+                <div class="amenity-icon">❄️</div> <p>Air Con</p>
+            </div>
+            <div class="amenity-item">
+                <div class="amenity-icon">📺</div> <p>Smart TV 55"</p>
+            </div>
+            <div class="amenity-item">
+                <div class="amenity-icon">🚿</div> <p>Hot Shower</p>
+            </div>
+            <div class="amenity-item">
+                <div class="amenity-icon">🚗</div> <p>Parking</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentIndex = 0;
+    const track = document.getElementById('sliderTrack');
+    const slides = document.querySelectorAll('.slide-item');
+    const totalSlides = slides.length;
+    
+    // ดึงปุ่มมาเก็บไว้ในตัวแปร
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // ฟังก์ชันอัปเดตสถานะปุ่ม (ซ่อน/แสดง)
+    function updateButtons() {
+        // ถ้าอยู่ที่รูปแรก (Index 0) ให้ซ่อนปุ่มซ้าย, ถ้าไม่ใช่ให้แสดง
+        if (currentIndex === 0) {
+            prevBtn.style.display = 'none';
+        } else {
+            prevBtn.style.display = 'flex';
+        }
+
+        // ถ้าอยู่ที่รูปสุดท้าย ให้ซ่อนปุ่มขวา, ถ้าไม่ใช่ให้แสดง
+        if (currentIndex === totalSlides - 1) {
+            nextBtn.style.display = 'none';
+        } else {
+            nextBtn.style.display = 'flex';
+        }
+    }
+
+    function moveSlide(direction) {
+        // อัปเดต Index
+        currentIndex += direction;
+
+        // ป้องกันไม่ให้ index เกินขอบเขต (แม้จะซ่อนปุ่มแล้ว กันเหนียวไว้)
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
+
+        // คำนวณระยะเลื่อน
+        const offset = -currentIndex * 100;
+        track.style.transform = `translateX(${offset}%)`;
+
+        // เรียกฟังก์ชันอัปเดตปุ่มทุกครั้งที่เลื่อน
+        updateButtons();
+    }
+
+    // เรียกครั้งแรกเพื่อเซ็ตค่าเริ่มต้น (ซ่อนปุ่มซ้ายทันที)
+    updateButtons();
+
+</script>
+
+{% endblock %}

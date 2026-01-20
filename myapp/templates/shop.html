@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}หน้าร้านค้า - My Shop{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS เฉพาะหน้า Shop (สามารถย้ายไปไว้ในไฟล์ .css แยกต่างหากได้) */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        border: 1px solid #eee;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 200px;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .product-info {
+        padding: 15px;
+    }
+
+    .product-title {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .product-price {
+        color: #e67e22;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    .buy-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #2ecc71;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="container">
+    <header style="margin-top: 20px;">
+        <h2>สินค้าทั้งหมด</h2>
+        <hr>
+    </header>
+
+    <div class="product-grid">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/250x200" alt="Product" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">สินค้าชิ้นที่ 1</h3>
+                <p class="product-price">฿590</p>
+                <a href="#" class="buy-btn">สั่งซื้อสินค้า</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/250x200" alt="Product" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">สินค้าชิ้นที่ 2</h3>
+                <p class="product-price">฿1,250</p>
+                <a href="#" class="buy-btn">สั่งซื้อสินค้า</a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/250x200" alt="Product" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">สินค้าชิ้นที่ 3</h3>
+                <p class="product-price">฿320</p>
+                <a href="#" class="buy-btn">สั่งซื้อสินค้า</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

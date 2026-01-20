@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - U.OK Co., Ltd.{% endblock %}
+
+{% block content %}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+    /* --- พื้นหลังและโครงสร้างหลัก (คงเดิม) --- */
+    .about-page {
+        background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+        padding-bottom: 80px;
+        overflow-x: hidden; /* ป้องกันสกรอลแนวนอนตอน Animation ทำงาน */
+    }
+
+    .about-hero {
+        background: linear-gradient(180deg, rgba(220, 53, 69, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+        padding: 100px 60px 50px;
+        text-align: center;
+    }
+
+    .about-hero h1 {
+        font-size: 3rem;
+        color: #b30000;
+        font-weight: 800;
+        margin-bottom: 10px;
+        letter-spacing: -1px;
+    }
+
+    .about-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px 60px 80px;
+        line-height: 2;
+        font-size: 1.15rem;
+        color: #444;
+    }
+
+    .values-container {
+        position: relative;
+        padding: 100px 0;
+        background: url("{% static 'images/forest_bg.jpg' %}") no-repeat center center/cover;
+        background-attachment: fixed;
+    }
+
+    .values-container::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgb(203, 7, 7) 0%, rgba(235, 54, 91, 0.9) 100%);
+        z-index: 1;
+    }
+
+    .values-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+    }
+
+    .section-label-modern {
+        display: inline-block;
+        background: #ffffff;
+        color: #b30000;
+        padding: 8px 30px;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        -webkit-tap-highlight-color: transparent; 
+    }
+
+    /* --- ส่วนการ์ด (คงเดิม) --- */
+    .value-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 30px 20px;
+        border-radius: 18px;
+        color: white;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100%;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .card-link:hover .value-card {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: translateY(-5px); /* เพิ่มขยับขึ้นเล็กน้อยตอน Hover */
+    }
+
+    .value-card.selected {
+        border-color: #ffffff; 
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3), 0 10px 20px rgba(0,0,0,0.2);
+        transform: translateY(-5px) scale(1.02);
+    }
+
+    .value-card .icon-circle {
+        width: 60px;
+        height: 60px;
+        background: white;
+        color: #b30000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 1.8rem;
+        font-weight: 800;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .value-card.selected .icon-circle {
+        background: #b30000;
+        color: #ffffff;     
+        transform: scale(1.15) rotate(10deg);
+        box-shadow: 0 4px 15px rgb(255, 73, 73);
+    }
+
+    .value-card h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .value-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        opacity: 0.95;
+    }
+
+    @media (max-width: 768px) {
+        .about-content { padding: 20px 30px; }
+        .values-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="about-page">
+    <div class="about-hero">
+        <h1 data-aos="fade-down" data-aos-duration="1000">เกี่ยวกับเรา</h1>
+        <p data-aos="fade-up" data-aos-duration="1200" style="font-size: 1.5rem; color: #666;">บริษัท ยู.โอเค จำกัด</p>
+    </div>
+
+    <div class="about-content">
+        <p data-aos="fade-up" data-aos-duration="1000">
+            <strong>เราคือผู้ให้บริการด้านการผลิตครบวงจร</strong> ทั้งในด้าน น้ำดื่มคุณภาพสูง ผลิตภัณฑ์สมุนไพรปลอดภัยตามมาตรฐาน และเครื่องสำอางที่ใส่ใจในทุกขั้นตอน... <span style="color: #dc3545; font-weight: bold;">"คุณภาพคือหัวใจของทุกสิ่งที่เราทำ"</span>
+        </p>
+
+        <div data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200" 
+             style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255, 5, 5, 0.05); margin: 50px 0;">
+            <h3 style="color: #b30000; margin-top: 0; font-size: 1.8rem;">วิสัยทัศน์และพันธกิจ</h3>
+            <p style="margin-bottom: 0;">
+                ยู.โอเค จำกัด – ผู้ผลิตน้ำดื่ม สมุนไพร และเครื่องสำอางครบวงจร...
+            </p>
+        </div>
+    </div>
+
+    <div class="values-container">
+        <div class="values-inner">
+            <div style="text-align: center;">
+                <span data-aos="fade-down" data-aos-duration="800" class="section-label-modern">Our Values</span>
+                <h2 data-aos="fade-up" data-aos-duration="1000" style="color: white; font-size: 2.5rem; margin-bottom: 50px; font-weight: 800;">บริษัท ยู.โอเค จำกัด</h2>
+            </div>
+            
+            <div class="values-grid">
+                <a href="{% url 'water_factory' %}" class="card-link" onclick="selectCard(this, event)">
+                    <div class="value-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">
+                        <div class="icon-circle">U</div>
+                        <h3>โรงงานผลิตน้ำดื่ม ยู.โอเค<br>(U.OK Drinking Water Factory)</h3>
+                        <p>เราใส่ใจในทุกขั้นตอนการผลิต เพื่อคุณภาพและความปลอดภัยสูงสุด</p>
+                    </div>
+                </a>
+
+                <a href="{% url 'herbal_factory' %}" class="card-link" onclick="selectCard(this, event)">
+                    <div class="value-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
+                        <div class="icon-circle">H</div>
+                        <h3>โรงงานผลิตผลิตภัณฑ์สมุนไพร<br>(Herbal Product Manufacturing Plant)</h3>
+                        <p>เราดำเนินงานอย่างโปร่งใส มีจรรยาบรรณ มาตรฐานระดับสากล</p>
+                    </div>
+                </a>
+
+                <a href="{% url 'cosmetic_factory' %}" class="card-link" onclick="selectCard(this, event)">
+                    <div class="value-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                        <div class="icon-circle">C</div>
+                        <h3>โรงงานผลิตเครื่องสำอาง<br>(Cosmetics Production Factory)</h3>
+                        <p>เราเติบโตไปพร้อมกับลูกค้า และมุ่งหวังสิ่งที่ไว้วางใจได้เสมอ</p>
+                    </div>
+                </a>
+
+                <a href="{% url 'resort' %}" class="card-link" onclick="selectCard(this, event)">
+                    <div class="value-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="450">
+                        <div class="icon-circle">R</div>
+                        <h3>ยู.โอเค รีสอร์ท<br>(U.OK Resort)</h3>
+                        <p>เรารับผิดชอบต่อสิ่งแวดล้อม และทุกสิ่งที่ส่งผลกระทบต่อโลก</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        once: false, /* ถ้าอยากให้เลื่อนลงแล้วเล่นทีเดียวเปลี่ยนเป็น true */
+        offset: 100, /* เริ่มเล่นก่อนถึง element 100px */
+    });
+
+    function selectCard(element, event) {
+        // Reset การ์ดอื่น
+        const allCards = document.querySelectorAll('.value-card');
+        allCards.forEach(card => card.classList.remove('selected'));
+
+        // เลือกการ์ดปัจจุบัน
+        const targetCard = element.querySelector('.value-card');
+        if (targetCard) {
+            targetCard.classList.add('selected');
+        }
+    }
+</script>
+{% endblock %}
