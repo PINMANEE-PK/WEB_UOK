@@ -5,340 +5,346 @@
 
 {% block content %}
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
 <style>
-    :root {
-        --swiper-theme-color: #1d1d1f; 
-    }
-
+    /* --- Base Setup --- */
     body {
-        font-family: 'Tinos', serif;
         margin: 0;
-        background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+        padding: 0;
+        font-family: 'Tinos', serif;
+        overflow-x: hidden;
+        
+        /* Background Image setup */
+        background-image: url("{% static 'pp.jpg' %}"); 
+        background-size: cover;      /* ขยายรูปให้เต็มจอเสมอ */
+        background-position: center; /* จัดกึ่งกลางรูป */
+        background-attachment: fixed; /* รูปจะนิ่งเมื่อเลื่อนเม้าส์ (Parallax) */
         min-height: 100vh;
-        overflow-x: hidden; /* ป้องกันสกรอลแนวนอนตอนอนิเมชั่นทำงาน */
+
+        /* --- เพิ่มคำสั่งช่วยเรนเดอร์ภาพให้คมชัด --- */
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: high-quality; 
     }
 
+    /* --- Typography --- */
+    h1, h2, h3, .product-title, .big-text, .related-name, .back-button {
+        font-family: 'Playfair Display', 'Chonburi', serif;
+    }
+
+    /* --- Glass Panel (Left Side) --- */
     .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 60px 20px;
+        width: 55%; 
+        min-height: 100vh;
+        margin: 0; 
+        padding: 60px 50px;
+        box-sizing: border-box;
+        
+        /* Glass Effect - ปรับให้ใสขึ้นและเบลอน้อยลง เพื่อให้เห็นพื้นหลังชัดขึ้น */
+        background: rgba(255, 255, 255, 0.75); /* ลดความทึบจาก 0.85 เหลือ 0.75 */
+        backdrop-filter: blur(8px);  /* ลดความเบลอจาก 15px เหลือ 8px */
+        -webkit-backdrop-filter: blur(8px);
+        
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        
+        position: relative;
+        z-index: 2;
     }
 
+    /* --- Big Floating Text (Right Side) --- */
+    .big-text-container {
+        position: fixed;
+        top: 50%;
+        right: 5%;
+        transform: translateY(-50%);
+        z-index: 1;
+        text-align: right;
+        pointer-events: none;
+    }
+
+    .big-text {
+        font-family: 'Playfair Display', serif; 
+        font-size: 15vw;
+        font-weight: 900;
+        color: white;
+        line-height: 0.8;
+        margin: 0;
+        text-transform: uppercase;
+        
+        /* เพิ่มเงาเข้มเพื่อให้ตัวหนังสือลอยเด่นออกมาจากพื้นหลัง */
+        text-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+        opacity: 1; /* ปรับให้ชัดสุด */
+    }
+    
+    .big-text span {
+        display: block;
+        font-size: 4vw;
+        font-weight: 400;
+        font-style: italic;
+        letter-spacing: 5px;
+        opacity: 0.95;
+        margin-bottom: 10px;
+        text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    }
+
+    /* --- Content Styling --- */
     .text-gradient-red {
-        background: linear-gradient(45deg, #8B0000, #ff4d4d);
+        background: linear-gradient(45deg, #da0808, #ff5d78);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        color: #b30000;
+        color: #ff2727;
     }
 
     .product-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
         margin-bottom: 40px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        padding-bottom: 30px;
+        border-bottom: 2px solid rgba(139, 0, 0, 0.1);
+        padding-bottom: 20px;
     }
 
     .product-title {
-        font-size: 52px;
-        font-weight: 700;
+        font-size: 56px;
+        font-weight: 400;
         margin: 0;
-        line-height: 1.1;
+        line-height: 1.2;
     }
 
     .product-subtitle {
-        font-size: 24px;
-        font-weight: 400;
-        color: #86868b;
-        margin-top: 10px;
+        font-family: 'Playfair Display', serif;
         font-style: italic;
-    }
-
-    .product-price {
-        font-size: 28px;
-        font-weight: 700;
-        color: #d32f2f;
+        font-size: 24px;
+        color: #666;
+        margin-top: 10px;
+        letter-spacing: 1px;
     }
 
     .hero-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 
     .hero-image-container {
-        position: relative;
-        text-align: center;
         width: 100%;
-        max-width: 650px; 
-        aspect-ratio: 4 / 3; 
+        border-radius: 18px;
         overflow: hidden;
-        border-radius: 32px;
-        background-color: #ffffff;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(0,0,0,0.03);
-        margin: 0 auto;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
-    .swiper {
+    .hero-image {
         width: 100%;
-        height: 100%;
-    }
-
-    .swiper-slide {
-        text-align: center;
-        background: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        padding: 40px;
-        box-sizing: border-box;
-    }
-
-    .hero-image-container .hero-image {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; 
+        height: auto;
         display: block;
         transition: transform 0.5s ease;
     }
     
-    .swiper-slide-active .hero-image {
-        transform: scale(1.02);
-    }
-
-    .swiper-button-next, .swiper-button-prev {
-        color: #1d1d1f;
-        background-color: rgba(230, 230, 235, 0.8);
-        backdrop-filter: blur(10px);
-        padding: 24px;
-        border-radius: 50%;
-        width: 12px;
-        height: 12px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
-
-    .swiper-button-next:hover, .swiper-button-prev:hover {
-         background-color: rgba(210, 210, 215, 1);
-         transform: scale(1.1);
-    }
-
-    .swiper-button-next::after, .swiper-button-prev::after {
-        font-size: 16px; 
-        font-weight: 600;
-    }
-
-    .swiper-button-prev.swiper-button-disabled,
-    .swiper-button-next.swiper-button-disabled {
-        opacity: 0;
-        cursor: auto;
-        pointer-events: none;
-    }
-
-    .product-details {
-        padding-top: 0;
-    }
+    .hero-image:hover { transform: scale(1.03); }
 
     .description {
-        font-size: 20px;
+        font-size: 18px;
         line-height: 1.8;
         color: #444;
-        margin-bottom: 40px;
-        font-weight: 400;
+        margin-bottom: 30px;
+        text-align: justify;
+        font-family: 'Tinos', serif; 
     }
 
     .back-button {
         display: inline-block;
-        padding: 14px 35px;
-        background: #d32f2f;
+        padding: 12px 35px;
+        background: #d90000;
         color: white;
         text-decoration: none;
-        border-radius: 980px;
+        border-radius: 50px;
         font-size: 18px;
-        font-weight: 500;
-        font-family: 'Tinos', serif;
-        box-shadow: 0 4px 12px rgba(211, 47, 47, 0.25);
         transition: all 0.3s ease;
+        border: 2px solid #ff3a3a;
+        letter-spacing: 1px;
     }
 
     .back-button:hover {
-        background: #b71c1c;
+        background: transparent;
+        color: #ff5353;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(211, 47, 47, 0.35);
     }
 
-    .related-section {
-        margin-top: 120px;
-    }
-
+    /* --- Related Grid --- */
+    .related-section { margin-top: 80px; }
+    
     .related-title {
-        font-size: 34px;
-        font-weight: 700;
-        margin-bottom: 40px;
+        font-size: 32px;
+        margin-bottom: 20px;
+        font-family: 'Chonburi', serif;
     }
 
     .related-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+        gap: 20px;
     }
 
     .related-card {
-        background-color: #ffffff;
-        border-radius: 24px;
-        overflow: hidden;
+        background-color: rgba(255, 255, 255, 0.9); /* พื้นหลังการ์ดทึบขึ้นนิดนึงให้อ่านง่าย */
+        border-radius: 15px;
+        padding: 20px;
         text-align: center;
-        padding: 30px;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 380px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(139, 0, 0, 0.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
 
     .related-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        transform: translateY(-5px);
+        background: white;
+        box-shadow: 0 15px 30px rgba(139, 0, 0, 0.15);
     }
 
     .related-image {
         width: 100%;
-        height: 220px;
-        object-fit: contain;
-        margin-bottom: 20px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
     }
 
-    .related-name {
-        font-size: 22px;
-        font-weight: 700;
-        margin: 0 0 10px;
-        color: #1d1d1f;
+    .related-name { 
+        font-size: 22px; 
+        color: #000000; 
+        margin-bottom: 5px; 
+        font-weight: 400; 
+    }
+    
+    .related-description { font-size: 15px; color: #666; font-family: 'Tinos', serif; }
+
+    /* --- Map Section Styling (เพิ่มใหม่) --- */
+    .map-section {
+        margin-top: 80px;
+        margin-bottom: 40px;
     }
 
-    .related-description {
-        font-size: 16px;
-        color: #86868b;
+    .map-container {
+        width: 100%;
+        height: 400px;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border: 5px solid rgba(255, 255, 255, 0.5);
     }
 
-    @media (max-width: 768px) {
-        .hero-section {
-            grid-template-columns: 1fr;
-            gap: 40px;
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    @media (max-width: 992px) {
+        .container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.90);
+            padding: 40px 20px;
+            backdrop-filter: blur(5px);
         }
-        .product-title { font-size: 36px; }
+        .big-text-container {
+            position: relative;
+            transform: none;
+            top: auto; right: auto;
+            text-align: center;
+            margin-bottom: -50px;
+            z-index: 0;
+            padding-top: 20px;
+        }
+        .big-text { font-size: 18vw; color: rgba(255,255,255,0.9); text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .big-text span { display: none; }
     }
 </style>
+
+<div class="big-text-container" data-aos="fade-left" data-aos-duration="1500">
+    <h1 class="big-text">
+        <span>PREMIUM</span>
+        DRINKING
+        <span>WATER</span>
+    </h1>
+</div>
 
 <div class="container">
     <div class="product-header">
         <div data-aos="fade-right" data-aos-duration="1000">
-            <h1 class="product-title text-gradient-red">โรงงานผลิตน้ำดื่ม ยู.โอเค</h1>
+            <h1 class="product-title text-gradient-red">โรงงานผลิต<br>น้ำดื่ม ยู.โอเค</h1>
             <p class="product-subtitle">U.OK Drinking Water Factory</p>
         </div>
-        <div class="product-price text-gradient-red"></div>
     </div>
 
     <div class="hero-section">
         <div class="hero-image-container" data-aos="zoom-in" data-aos-duration="1200">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="{% static 'images/waterUOK.jpg' %}" alt="น้ำดื่ม ยู.โอเค ภาพที่ 1" class="hero-image">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="{% static 'images/5.jpg' %}" alt="น้ำดื่ม ยู.โอเค ภาพที่ 2" class="hero-image">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="{% static 'images/1.jpg' %}" alt="น้ำดื่ม ยู.โอเค ภาพที่ 3" class="hero-image">
-                    </div>
-                     <div class="swiper-slide">
-                        <img src="{% static 'images/2.jpg' %}" alt="น้ำดื่ม ยู.โอเค ภาพที่ 4" class="hero-image">
-                    </div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
+            <img src="{% static 'images/ww.jpg' %}" alt="โรงงานผลิตน้ำดื่ม ยู.โอเค" class="hero-image" onerror="this.style.display='none'">
         </div>
-
+        
         <div class="product-details" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
             <p class="description">
                 ที่นี่เป็นโรงงานที่รับผลิตน้ำดื่มให้กับลูกค้าในแบรนด์สินค้าของลูกค้า (OEM) เช่น
                 น้ำดื่มมูลนิธิป่อเต็กตึ๊ง โดยทางน้ำดื่มยู.โอเค ได้รับความไว้วางใจให้ผลิตน้ำในแบรนด์
                 มูลนิธิป่อเต็กตึ๊งมายาวนาน รวมไปถึง
-                <br>- น้ำดื่ม มูลนิธิโพธิภาวนาสงเคราะห์
-                <br>- น้ำดื่ม วัดมัชณันติการาม
+                <br>
+                • น้ำดื่ม มูลนิธิโพธิภาวนาสงเคราะห์<br>
+                • น้ำดื่ม วัดมัชณันติการาม
             </p>
             <a href="{% url 'home' %}" class="back-button">กลับหน้าหลัก</a>
         </div>
     </div>
 
     <div class="related-section">
-        <h2 class="related-title text-gradient-red" data-aos="fade-right" data-aos-duration="1000">ผลิตภัณฑ์</h2>
-        
+        <h2 class="related-title text-gradient-red" data-aos="fade-right" data-aos-duration="1000">รูปแบบการผลิต</h2>
         <div class="related-grid">
+            
             <div class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">
-                <img src="{% static 'images/1.jpg' %}" alt="น้ำแก้ว" class="related-image"> 
-                <h3 class="related-name">น้ำแก้ว</h3>
-                <p class="related-description">สะอาด ปลอดภัย ใส่ใจทุกขั้นตอน</p>
+                <img src="{% static 'images/11.jpg' %}" alt="น้ำแก้ว 220ml" class="related-image" onerror="this.style.display='none'">
+                <h3 class="related-name">น้ำแก้ว 220ml.</h3>
             </div>
 
             <div class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-                <img src="{% static 'images/22.jpg' %}" alt="น้ำขวด 350ml." class="related-image"> 
-                <h3 class="related-name">น้ำขวด 350ml.</h3>
-                <p class="related-description">มาตรฐานสากล เพื่อสุขภาพที่ดี</p>
+                <img src="{% static 'images/2.2.jpg' %}" alt="ขวด 350ml" class="related-image" onerror="this.style.display='none'">
+                <h3 class="related-name">350ml.</h3>
             </div>
 
             <div class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                <img src="{% static 'images/3.jpg' %}" alt="น้ำขวด 600ml." class="related-image"> 
-                <h3 class="related-name">น้ำขวด 600ml.</h3>
-                <p class="related-description">สร้างแบรนด์ของคุณให้เติบโต</p>
+                <img src="{% static 'images/33.jpg' %}" alt="ขวด 600ml" class="related-image" onerror="this.style.display='none'">
+                <h3 class="related-name">600ml.</h3>
             </div>
 
             <div class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-                <img src="{% static 'images/4.jpg' %}" alt="น้ำขวด 1.5l." class="related-image">
-                <h3 class="related-name">น้ำขวด 1.5l.</h3>
-                <p class="related-description">สร้างแบรนด์ของคุณให้เติบโต</p>
+                <img src="{% static 'images/44.jpg' %}" alt="ขวด 1500ml" class="related-image" onerror="this.style.display='none'">
+                <h3 class="related-name">1500ml.</h3>
             </div>
+
         </div>
     </div>
+
+    <div class="map-section" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="related-title text-gradient-red">สถานที่ตั้งโรงงาน</h2>
+        <div class="map-container">
+            <iframe 
+                src="https://maps.google.com/maps?q=น้ำดื่มยู.โอเค+48+บางกระสอ+อำเภอเมืองนนทบุรี+นนทบุรี+11000&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+        <p class="description" style="text-align: center; margin-top: 15px; font-size: 16px;">
+            48 ต.บางกระสอ อ.เมืองนนทบุรี จ.นนทบุรี 11000
+        </p>
+    </div>
+
 </div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <script>
-    // เริ่มต้น AOS
-    AOS.init({
-        once: false,
-        offset: 120,
-    });
-
-    // เริ่มต้น Swiper
-    var swiper = new Swiper(".mySwiper", {
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        loop: false,
-        spaceBetween: 30, 
-        effect: 'fade',
-        fadeEffect: {
-            crossFade: true
-        },
+  AOS.init({
+      once: false,
+      offset: 50,
     });
 </script>
 

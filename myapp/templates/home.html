@@ -2,35 +2,44 @@
 {% load static %}
 
 {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
+    /* ตั้งค่าฟอนต์เริ่มต้นเป็น Tinos */
+    body {
+        font-family: 'Tinos', serif;
+    }
+
     /* ปลดล็อคขอบขาวเฉพาะหน้านี้ */
     main {
         padding: 0 !important;
         margin: 0 !important;
         max-width: 100% !important;
         width: 100%;
-        overflow-x: hidden; /* ป้องกันสกรอลแนวนอนตอนอนิเมชั่น */
+        overflow-x: hidden; 
     }
 
     /* Hero Section */
     .hero-container {
         position: relative;
         width: 100%;
-        
-        /* สัดส่วนภาพแนวยาว (Banner) */
         aspect-ratio: 21 / 8; 
         min-height: 400px;    
-
-        /* ใส่รูปพื้นหลัง */
         background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url("{% static 'images/xd.jpg' %}") no-repeat center center;
-        
-        /* บังคับให้รูปยืดเต็มกล่อง */
         background-size: 100% 100%; 
         
         display: flex;
-        align-items: center;  
+        
+        /* --- จุดที่แก้ไข: เปลี่ยนจาก center เป็น flex-end เพื่อดันลงล่าง --- */
+        align-items: flex-end;  
+        
+        /* --- จุดที่แก้ไข: เพิ่มระยะห่างจากขอบล่าง 60px ไม่ให้ติดขอบเกินไป --- */
+        padding-bottom: 60px; 
+
         padding-left: 80px;
         box-sizing: border-box;
     }
@@ -45,23 +54,24 @@
         max-width: 500px; 
     }
 
-    /* ไล่สีตัวหนังสือหัวข้อ */
+    /* --- เปลี่ยนฟอนต์หัวข้อใหญ่เป็น Chonburi --- */
     .hero-overlay-text h1 {
+        font-family: 'Chonburi', serif;
         font-size: 56px; 
-        font-weight: 900;
+        font-weight: 400;
         margin: 0;
-        line-height: 1.1;
+        line-height: 1.2;
         
-        background: linear-gradient(45deg, #8B0000, #ff4d4d);
+        background: linear-gradient(45deg, #e70000, #ff4d4d);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        color: #8B0000; 
+        color: #e70000; 
     }
 
     .hero-overlay-text p {
         font-size: 28px;
-        color: #dc3545; 
+        color: #ff4e5f; 
         margin: 10px 0 0;
         font-weight: 700;
         letter-spacing: 1px;
@@ -72,7 +82,7 @@
         position: fixed;
         bottom: 30px;
         right: 30px;
-        background: linear-gradient(45deg, #d32f2f, #ff1744);
+        background: linear-gradient(45deg, #ff0000, #ff2e58);
         color: white;
         padding: 15px 30px;
         border-radius: 50px;
@@ -81,9 +91,10 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5);
+        box-shadow: 0 4px 15px rgba(217, 20, 20, 0.649);
         z-index: 999;
         transition: transform 0.3s ease;
+        font-family: 'Tinos', serif;
     }
 
     .chat-button:hover {
@@ -96,6 +107,11 @@
             aspect-ratio: auto; 
             min-height: 450px;
             padding-left: 0;
+            
+            /* ในมือถือ ให้กลับมาอยู่ตรงกลางเหมือนเดิม เพื่อความสวยงาม */
+            align-items: center; 
+            padding-bottom: 0;
+            
             justify-content: center;
             background-size: cover; 
         }
@@ -125,12 +141,12 @@
 <div style="padding: 60px 20px; text-align: center; background-color: #fff; min-height: 300px;">
     
     <h2 data-aos="fade-up" data-aos-duration="1000" 
-        style="font-size: 38px; font-weight: 800; margin-bottom: 20px; background: linear-gradient(to right, #8B0000, #ff4d4d); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        style="font-family: 'Chonburi', serif; font-size: 38px; margin-bottom: 20px; background: linear-gradient(to right, #ff0000, #ff5757); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
         ยินดีต้อนรับสู่ U.OK Co., Ltd.
     </h2>
 
     <p data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200"
-       style="font-size: 18px; color: #666; max-width: 800px; margin: 0 auto;">
+       style="font-family: 'Tinos', serif; font-size: 20px; color: #666; max-width: 800px; margin: 0 auto;">
         เราพร้อมให้บริการและดูแลคุณด้วยความเป็นมืออาชีพ
     </p>
 
@@ -141,7 +157,7 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init({
-      once: false, /* ถ้าอยากให้เลื่อนลงแล้วเล่นทีเดียวเปลี่ยนเป็น true */
+      once: false,
   });
 </script>
 

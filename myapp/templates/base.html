@@ -14,6 +14,9 @@
         body { 
             margin: 0; 
             font-family: 'Tinos', serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- 1. ส่วน Header (ด้านบน) --- */
@@ -23,12 +26,12 @@
             justify-content: space-between; 
             padding: 15px 40px; 
             
-            /* ไล่สีพื้นหลังด้านบน (เหมือนด้านล่าง) */
-            background: linear-gradient(90deg, #da0505 0%, #ff8d8d 100%);
+            /* ไล่สีพื้นหลังด้านบน */
+            background: linear-gradient(90deg, #e70000 0%, #ff8d8d 100%);
             
-            /* เพิ่มเงาเล็กน้อยให้ดูมีมิติ */
+            /* เพิ่มเงาเล็กน้อย */
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            color: white; /* เปลี่ยนสีตัวหนังสือพื้นฐานเป็นขาว */
+            color: white;
         }
 
         .logo { 
@@ -37,36 +40,36 @@
             gap: 12px; 
             font-size: 22px; 
             font-weight: bold; 
-            color: white; /* เปลี่ยนสีโลโก้เป็นขาวให้อ่านออกบนพื้นแดง */
+            color: white;
         }
         
         .logo img { 
             height: 50px; 
-            border-radius: 5px; /* ลบมุมรูปโลโก้นิดนึงให้ดูนุ่มขึ้น */
+            border-radius: 5px;
         }
 
         nav a { 
             margin: 0 12px; 
             text-decoration: none; 
-            color: white; /* เปลี่ยนสีลิ้งค์เมนูเป็นขาว */
+            color: white;
             font-weight: 600; 
             transition: opacity 0.3s;
         }
         
         nav a:hover { 
             text-decoration: underline; 
-            opacity: 0.8; /* เวลาเอาเมาส์ชี้ให้จางลงนิดหน่อย */
+            opacity: 0.8;
         }
 
         main { 
             padding: 40px; 
-            min-height: 400px; 
+            flex: 1; /* ดัน Footer ลงล่างสุดเสมอถ้าเนื้อหาน้อย */
         }
 
         /* --- 2. ส่วน Footer (ด้านล่าง) --- */
         footer { 
             /* ไล่สีพื้นหลังด้านล่าง */
-            background: linear-gradient(90deg, #da0505 0%, #ff8d8d 100%);
+            background: linear-gradient(90deg, #e70000 0%, #ff8d8d 100%);
             color: white; 
             padding: 30px 40px; 
             font-size: 14px; 
@@ -97,6 +100,7 @@
     {% endblock %}
 </main>
 
+{% if request.resolver_match.url_name == 'home' %}
 <footer>
     <div class="footer-grid">
         <div>
@@ -118,6 +122,7 @@
         </div>
     </div>
 </footer>
+{% endif %}
 
 </body>
 </html>
