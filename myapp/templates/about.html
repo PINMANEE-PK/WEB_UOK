@@ -4,42 +4,66 @@
 {% block title %}About Us - U.OK Co., Ltd.{% endblock %}
 
 {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
-    /* --- พื้นหลังและโครงสร้างหลัก (คงเดิม) --- */
+    /* --- กำหนดฟอนต์หลัก --- */
+    body {
+        font-family: 'Tinos', serif;
+    }
+
+    /* --- พื้นหลังและโครงสร้างหลัก --- */
     .about-page {
         background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
         padding-bottom: 80px;
-        overflow-x: hidden; /* ป้องกันสกรอลแนวนอนตอน Animation ทำงาน */
+        overflow-x: hidden;
+        font-family: 'Tinos', serif;
     }
 
     .about-hero {
         background: linear-gradient(180deg, rgba(220, 53, 69, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-        padding: 100px 60px 50px;
+        padding: 120px 60px 70px; 
         text-align: center;
     }
 
     .about-hero h1 {
-        font-size: 3rem;
+        font-family: 'Chonburi', serif;
+        font-size: 5rem; 
         color: #b30000;
-        font-weight: 800;
-        margin-bottom: 10px;
-        letter-spacing: -1px;
+        font-weight: 400;
+        margin-bottom: 20px;
+        line-height: 1.1;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.05);
+    }
+
+    .about-hero p {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #555;
+        letter-spacing: 1px;
     }
 
     .about-content {
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 0 auto;
-        padding: 20px 60px 80px;
-        line-height: 2;
-        font-size: 1.15rem;
-        color: #444;
+        padding: 40px 60px 80px;
+        line-height: 2.2;
+        font-size: 1.45rem;
+        color: #333;
+    }
+
+    .about-content h3 {
+        font-family: 'Chonburi', serif;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
     }
 
     .values-container {
         position: relative;
-        padding: 100px 0;
+        padding: 100px 0; /* ลด Padding บนล่างนิดหน่อย */
         background: url("{% static 'images/forest_bg.jpg' %}") no-repeat center center/cover;
         background-attachment: fixed;
     }
@@ -48,14 +72,14 @@
         content: "";
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(135deg, rgb(203, 7, 7) 0%, rgba(235, 54, 91, 0.9) 100%);
+        background: linear-gradient(135deg, rgb(200, 10, 10) 0%, rgba(255, 80, 100, 0.95) 100%);
         z-index: 1;
     }
 
     .values-inner {
         position: relative;
         z-index: 2;
-        max-width: 1200px;
+        max-width: 1200px; /* ปรับความกว้างให้กระชับขึ้น */
         margin: 0 auto;
         padding: 0 40px;
     }
@@ -66,17 +90,19 @@
         color: #b30000;
         padding: 8px 30px;
         border-radius: 50px;
-        font-weight: 800;
+        font-weight: 700;
         font-size: 0.9rem;
         text-transform: uppercase;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        font-family: 'Tinos', serif;
+        letter-spacing: 1px;
     }
 
     .values-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px; /* ลดช่องว่างระหว่างการ์ด */
     }
 
     .card-link {
@@ -86,13 +112,13 @@
         -webkit-tap-highlight-color: transparent; 
     }
 
-    /* --- ส่วนการ์ด (คงเดิม) --- */
+    /* --- ส่วนการ์ด --- */
     .value-card {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        padding: 30px 20px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        padding: 30px 20px; /* ลด Padding ภายในการ์ด */
         border-radius: 18px;
         color: white;
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -106,76 +132,88 @@
     }
 
     .card-link:hover .value-card {
-        background: rgba(255, 255, 255, 0.25);
-        border-color: rgba(255, 255, 255, 0.6);
-        transform: translateY(-5px); /* เพิ่มขยับขึ้นเล็กน้อยตอน Hover */
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.8);
+        transform: translateY(-8px);
     }
 
     .value-card.selected {
         border-color: #ffffff; 
-        background: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3), 0 10px 20px rgba(0,0,0,0.2);
-        transform: translateY(-5px) scale(1.02);
+        background: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.3), 0 15px 30px rgba(0,0,0,0.2);
+        transform: translateY(-8px) scale(1.02);
     }
 
     .value-card .icon-circle {
-        width: 60px;
+        width: 60px; /* ลดขนาดวงกลม (จาก 70px) */
         height: 60px;
         background: white;
-        color: #b30000;
+        color: #c90000;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 20px;
-        font-size: 1.8rem;
+        font-size: 1.8rem; /* ลดขนาดไอคอน */
         font-weight: 800;
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        font-family: 'Tinos', serif;
     }
 
     .value-card.selected .icon-circle {
         background: #b30000;
         color: #ffffff;     
-        transform: scale(1.15) rotate(10deg);
-        box-shadow: 0 4px 15px rgb(255, 73, 73);
+        transform: scale(1.2) rotate(10deg);
+        box-shadow: 0 5px 20px rgb(255, 90, 90);
     }
 
+    /* --- [แก้ไข] ปรับลดขนาดตัวหนังสือในการ์ด --- */
     .value-card h3 {
-        font-size: 1.25rem;
-        font-weight: 700;
+        font-family: 'Chonburi', serif;
+        font-size: 1.3rem; /* ลดจาก 1.6rem -> 1.3rem */
+        font-weight: 400;
         margin-bottom: 15px;
         line-height: 1.4;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .value-card p {
-        font-size: 0.95rem;
+        font-family: 'Tinos', serif;
+        font-size: 1rem; /* ลดจาก 1.15rem -> 1rem */
         line-height: 1.6;
         opacity: 0.95;
+        font-weight: 400;
     }
 
     @media (max-width: 768px) {
-        .about-content { padding: 20px 30px; }
+        .about-content { padding: 30px 25px; font-size: 1.25rem; }
         .values-grid { grid-template-columns: 1fr; }
+        .about-hero h1 { font-size: 3rem; }
+        .about-hero p { font-size: 1.4rem; }
+        
+        /* มือถือลดหัวข้อลงอีกนิด */
+        .values-container h2 { font-size: 2rem !important; }
     }
 </style>
 
 <div class="about-page">
     <div class="about-hero">
         <h1 data-aos="fade-down" data-aos-duration="1000">เกี่ยวกับเรา</h1>
-        <p data-aos="fade-up" data-aos-duration="1200" style="font-size: 1.5rem; color: #666;">บริษัท ยู.โอเค จำกัด</p>
+        <p data-aos="fade-up" data-aos-duration="1200">บริษัท ยู.โอเค จำกัด</p>
     </div>
 
     <div class="about-content">
         <p data-aos="fade-up" data-aos-duration="1000">
-            <strong>เราคือผู้ให้บริการด้านการผลิตครบวงจร</strong> ทั้งในด้าน น้ำดื่มคุณภาพสูง ผลิตภัณฑ์สมุนไพรปลอดภัยตามมาตรฐาน และเครื่องสำอางที่ใส่ใจในทุกขั้นตอน... <span style="color: #dc3545; font-weight: bold;">"คุณภาพคือหัวใจของทุกสิ่งที่เราทำ"</span>
+            <strong>เราคือผู้ให้บริการด้านการผลิตครบวงจร</strong> ทั้งในด้าน น้ำดื่มคุณภาพสูง ผลิตภัณฑ์สมุนไพรปลอดภัยตามมาตรฐาน และเครื่องสำอางที่ใส่ใจในทุกขั้นตอน... <br><br>
+            <span style="color: #dc3545; font-weight: bold; font-size: 1.8rem; display: block; margin-top: 10px;">"คุณภาพคือหัวใจของทุกสิ่งที่เราทำ"</span>
         </p>
 
         <div data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200" 
-             style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255, 5, 5, 0.05); margin: 50px 0;">
-            <h3 style="color: #b30000; margin-top: 0; font-size: 1.8rem;">วิสัยทัศน์และพันธกิจ</h3>
+             style="background: white; padding: 50px; border-radius: 30px; box-shadow: 0 15px 40px rgba(179, 0, 0, 0.08); margin: 60px 0;">
+            <h3 style="color: #b30000; margin-top: 0;">วิสัยทัศน์และพันธกิจ</h3>
             <p style="margin-bottom: 0;">
-                ยู.โอเค จำกัด – ผู้ผลิตน้ำดื่ม สมุนไพร และเครื่องสำอางครบวงจร...
+                ยู.โอเค จำกัด – ผู้ผลิตน้ำดื่ม สมุนไพร และเครื่องสำอางครบวงจร มุ่งมั่นสู่ความเป็นเลิศในทุกด้าน เพื่อส่งมอบสิ่งที่ดีที่สุดให้กับคู่ค้าและผู้บริโภค
             </p>
         </div>
     </div>
@@ -184,7 +222,9 @@
         <div class="values-inner">
             <div style="text-align: center;">
                 <span data-aos="fade-down" data-aos-duration="800" class="section-label-modern">Our Values</span>
-                <h2 data-aos="fade-up" data-aos-duration="1000" style="color: white; font-size: 2.5rem; margin-bottom: 50px; font-weight: 800;">บริษัท ยู.โอเค จำกัด</h2>
+                <h2 data-aos="fade-up" data-aos-duration="1000" style="font-family: 'Chonburi', serif; color: white; font-size: 2.8rem; margin-bottom: 50px; font-weight: 400; text-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    บริษัท ยู.โอเค จำกัด
+                </h2>
             </div>
             
             <div class="values-grid">
@@ -227,16 +267,14 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
     AOS.init({
-        once: false, /* ถ้าอยากให้เลื่อนลงแล้วเล่นทีเดียวเปลี่ยนเป็น true */
-        offset: 100, /* เริ่มเล่นก่อนถึง element 100px */
+        once: false,
+        offset: 100,
     });
 
     function selectCard(element, event) {
-        // Reset การ์ดอื่น
         const allCards = document.querySelectorAll('.value-card');
         allCards.forEach(card => card.classList.remove('selected'));
 
-        // เลือกการ์ดปัจจุบัน
         const targetCard = element.querySelector('.value-card');
         if (targetCard) {
             targetCard.classList.add('selected');

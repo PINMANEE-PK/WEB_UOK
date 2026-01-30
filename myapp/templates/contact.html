@@ -1,143 +1,340 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}ติดต่อเรา - My Shop{% endblock %}
+{% block title %}ติดต่อเรา - U.OK Co., Ltd.{% endblock %}
 
 {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <style>
-    /* CSS เฉพาะหน้า Contact */
-    .contact-container {
-        max-width: 1000px;
-        margin: 40px auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* แบ่งครึ่งหน้าจอ */
-        gap: 40px;
-        padding: 0 20px;
+    /* --- Main Page Style --- */
+    body {
+        background-color: #f4f6f9;
+        font-family: 'Tinos', serif;
     }
 
-    /* ส่วนฟอร์มติดต่อ */
-    .contact-form {
-        background: #ffffff;
-        padding: 30px;
+    /* 1. Header Banner (แถบสีแดงด้านบน) */
+    .contact-header-banner {
+        background: linear-gradient(135deg, #b30000, #ff4d4d); /* ไล่สีแดง */
+        height: 280px;
+        width: 100%;
+        padding-top: 60px;
+        padding-left: 10%;
+        box-sizing: border-box;
+        color: white;
+        position: relative;
+    }
+
+    .contact-header-banner h1 {
+        font-family: 'Chonburi', serif;
+        font-size: 48px;
+        margin: 0;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .contact-header-banner p {
+        font-size: 18px;
+        opacity: 0.9;
+        margin-top: 10px;
+    }
+
+    /* 2. Floating Container (กล่องลอยตรงกลาง) */
+    .main-wrapper {
+        max-width: 1100px;
+        margin: -120px auto 50px; /* ดึงกล่องขึ้นไปทับ Header */
+        padding: 0 20px;
+        position: relative;
+        z-index: 10;
+    }
+
+    .contact-card-shadow {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+    }
+
+    /* --- Left Side: Contact Info & Map --- */
+    .left-info-section {
+        flex: 1;
+        min-width: 350px;
+        padding: 40px;
+        background-color: #fff;
+    }
+
+    .section-title {
+        font-family: 'Chonburi', serif;
+        color: #b30000;
+        font-size: 24px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+
+    .info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 30px 0;
+    }
+
+    .info-list li {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+        background-color: #fff0f0;
+        color: #d90000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .info-text h4 {
+        margin: 0 0 5px;
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .info-text p {
+        margin: 0;
+        font-size: 15px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    /* Map Styles */
+    .map-container {
+        width: 100%;
+        height: 200px;
         border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+        border: 1px solid #eee;
+    }
+    
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    /* --- Right Side: Form --- */
+    .right-form-section {
+        flex: 1;
+        min-width: 350px;
+        background-color: #fdfdfd;
+        border-left: 1px solid #eee;
+    }
+
+    .form-header {
+        background: linear-gradient(to right, #d90000, #ff4b4b);
+        color: white;
+        padding: 20px 30px;
+    }
+
+    .form-header h3 {
+        margin: 0;
+        font-family: 'Chonburi', serif;
+        font-size: 22px;
+    }
+
+    .form-body {
+        padding: 30px;
     }
 
     .form-group {
         margin-bottom: 20px;
     }
 
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .form-group input, 
-    .form-group textarea {
+    .form-control {
         width: 100%;
-        padding: 12px;
+        padding: 12px 15px;
         border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 1rem;
+        border-radius: 6px;
+        font-size: 15px;
+        background-color: #f9f9f9;
+        transition: all 0.3s;
+        box-sizing: border-box; /* สำคัญเพื่อไม่ให้ input ล้น */
     }
 
-    .submit-btn {
-        background-color: #3498db;
+    .form-control:focus {
+        border-color: #d90000;
+        background-color: #fff;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(217, 0, 0, 0.1);
+    }
+
+    .btn-submit {
+        background: #d90000;
         color: white;
         border: none;
-        padding: 12px 25px;
-        border-radius: 5px;
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
         cursor: pointer;
-        font-size: 1rem;
+        width: 100%;
         transition: background 0.3s;
+        font-family: 'Tinos', serif;
     }
 
-    .submit-btn:hover {
-        background-color: #2980b9;
+    .btn-submit:hover {
+        background: #b30000;
+        transform: translateY(-2px);
     }
 
-    /* ส่วนข้อมูลติดต่อ */
-    .contact-info h2 {
-        margin-bottom: 20px;
-        color: #2c3e50;
+    /* --- Bottom Support Cards --- */
+    .bottom-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
     }
 
-    .info-item {
-        margin-bottom: 25px;
+    .support-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
 
-    .info-item span {
-        font-size: 1.5rem;
+    .support-icon {
+        font-size: 30px;
+        color: #d90000;
         margin-right: 15px;
     }
 
-    /* ปรับแต่งสำหรับมือถือ */
+    .social-icons a {
+        color: #666;
+        margin-left: 8px;
+        font-size: 18px;
+        transition: color 0.3s;
+    }
+    
+    .social-icons a:hover { color: #d90000; }
+
+    /* Responsive */
     @media (max-width: 768px) {
-        .contact-container {
-            grid-template-columns: 1fr;
+        .contact-header-banner {
+            padding-left: 20px;
+            height: 220px;
         }
+        .contact-header-banner h1 { font-size: 36px; }
+        .main-wrapper { margin-top: -80px; }
+        .contact-card-shadow { flex-direction: column; }
+        .right-form-section { border-left: none; border-top: 1px solid #eee; }
     }
 </style>
 
-<div class="contact-container">
-    
-    <div class="contact-info">
-        <h2>ติดต่อเรา</h2>
-        <p style="margin-bottom: 30px; color: #666;">หากคุณมีข้อสงสัยหรือต้องการสอบถามข้อมูลเพิ่มเติม สามารถส่งข้อความหาเราได้ทันที</p>
-        
-        <div class="info-item">
-            <span>📍</span>
-            <div>
-                <strong>ที่อยู่:</strong><br>
-                222 ถนนงามวงศ์วาน แขวง/ตำบล บางเขน เขต/อำเภอ เมืองนนทบุรี นนทบุรี 11000
-            </div>
-        </div>
-
-        <div class="info-item">
-            <span>📞</span>
-            <div>
-                <strong>เบอร์โทรศัพท์:</strong><br>
-                098-159-6636 หรือ 093-939-5199
-            </div>
-        </div>
-
-        <div class="info-item">
-            <span>✉️</span>
-            <div>
-                <strong>อีเมล:</strong><br>
-                support@yourshop.com
-            </div>
-        </div>
-    </div>
-
-    <div class="contact-form">
-        <form action="#" method="POST">
-            <div class="form-group">
-                <label for="name">ชื่อ-นามสกุล</label>
-                <input type="text" id="name" name="name" placeholder="กรอกชื่อของคุณ" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">อีเมลติดต่อ</label>
-                <input type="email" id="email" name="email" placeholder="example@mail.com" required>
-            </div>
-
-            <div class="form-group">
-                <label for="subject">หัวข้อเรื่อง</label>
-                <input type="text" id="subject" name="subject" placeholder="ติดต่อเรื่องอะไร" required>
-            </div>
-
-            <div class="form-group">
-                <label for="message">ข้อความ</label>
-                <textarea id="message" name="message" rows="5" placeholder="เขียนรายละเอียดที่นี่..." required></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">ส่งข้อความ</button>
-        </form>
-    </div>
-
+<div class="contact-header-banner">
+    <h1>Contact Us</h1>
+    <p>บริษัท ยู.โอเค จำกัด พร้อมให้บริการและตอบคำถามของคุณ</p>
 </div>
+
+<div class="main-wrapper">
+    <div class="contact-card-shadow">
+        
+        <div class="left-info-section">
+            <h3 class="section-title">Get In Touch</h3>
+            
+            <ul class="info-list">
+                <li>
+                    <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <h4>ที่อยู่ (Address)</h4>
+                        <p>222 ถนนงามวงศ์วาน แขวง/ตำบล บางเขน<br>เขต/อำเภอ เมืองนนทบุรี นนทบุรี 11000</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon-circle"><i class="fas fa-phone-alt"></i></div>
+                    <div class="info-text">
+                        <h4>เบอร์โทรศัพท์ (Call Us)</h4>
+                        <p>098-159-6636<br>093-939-5199</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="icon-circle"><i class="fas fa-clock"></i></div>
+                    <div class="info-text">
+                        <h4>เวลาทำการ (Opening Hours)</h4>
+                        <p>จันทร์ - ศุกร์: 08:00 - 17:00 น.<br>เสาร์ - อาทิตย์: ปิดทำการ</p>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.123456789!2d100.5!3d13.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDUxJzAwLjAiTiAxMDDCsDMwJzAwLjAiRQ!5e0!3m2!1sth!2sth!4v1600000000000!5m2!1sth!2sth" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <div class="right-form-section">
+            <div class="form-header">
+                <h3>Send Us a Message</h3>
+            </div>
+            <div class="form-body">
+                <form method="post" action="#"> {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="ชื่อของคุณ (Your Name)" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="อีเมล (Your Email)" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" name="phone" placeholder="เบอร์โทรศัพท์ (Phone Number)">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" rows="5" placeholder="ข้อความของคุณ (Your Message)" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">ส่งข้อความ</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-cards">
+        <div class="support-card">
+            <div class="support-icon"><i class="far fa-comments"></i></div>
+            <div>
+                <strong>Live Chat</strong><br>
+                <span style="font-size: 14px; color:#777;">Chat with us online</span>
+            </div>
+        </div>
+        
+        <div class="support-card">
+            <div class="support-icon"><i class="far fa-question-circle"></i></div>
+            <div>
+                <strong>FAQs</strong><br>
+                <span style="font-size: 14px; color:#777;">คำถามที่พบบ่อย</span>
+            </div>
+        </div>
+
+        <div class="support-card">
+            <div class="support-icon"><i class="fas fa-share-alt"></i></div>
+            <div>
+                <strong>Follow Us</strong><br>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-line"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

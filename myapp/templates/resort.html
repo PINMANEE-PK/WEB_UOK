@@ -8,23 +8,82 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
 <style>
+    /* --- Base Setup --- */
     body {
-        font-family: 'Tinos', serif;
         margin: 0;
-        background: linear-gradient(135deg, #fff5f5 0%, #ffebeb 100%);
+        padding: 0;
+        font-family: 'Tinos', serif;
+        overflow-x: hidden;
+        
+        /* Background Image setup */
+        background-image: url("{% static 'rr.jpg' %}"); 
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         min-height: 100vh;
-        overflow-x: hidden; /* ป้องกันสกรอลแนวนอนตอนอนิเมชั่น */
     }
 
+    /* --- Typography --- */
+    h1, h2, h3, .product-title, .big-text, .related-name, .back-button {
+        font-family: 'Playfair Display', 'Chonburi', serif;
+    }
+
+    /* --- Glass Panel (Left Side) --- */
     .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 60px 20px;
+        width: 55%; 
+        min-height: 100vh;
+        margin: 0; 
+        padding: 60px 50px;
+        box-sizing: border-box;
+        
+        /* Glass Effect */
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        
+        position: relative;
+        z-index: 2;
     }
 
+    /* --- Big Floating Text (Right Side) --- */
+    .big-text-container {
+        position: fixed;
+        top: 50%;
+        right: 5%;
+        transform: translateY(-50%);
+        z-index: 1;
+        text-align: right;
+        pointer-events: none;
+    }
+
+    .big-text {
+        font-family: 'Playfair Display', serif; 
+        font-size: 15vw;
+        font-weight: 900;
+        color: white;
+        line-height: 0.8;
+        margin: 0;
+        text-transform: uppercase;
+        text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        opacity: 0.95;
+    }
+    
+    .big-text span {
+        display: block;
+        font-size: 4vw;
+        font-weight: 400;
+        font-style: italic;
+        letter-spacing: 5px;
+        opacity: 0.9;
+        margin-bottom: 10px;
+    }
+
+    /* --- Content Styling --- */
     .text-gradient-red {
         background: linear-gradient(45deg, #8B0000, #ff4d4d);
         -webkit-background-clip: text;
@@ -34,258 +93,218 @@
     }
 
     .product-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
         margin-bottom: 40px;
-        border-bottom: 1px solid rgba(139, 0, 0, 0.1);
-        padding-bottom: 30px;
+        border-bottom: 2px solid rgba(139, 0, 0, 0.1);
+        padding-bottom: 20px;
     }
 
     .product-title {
-        font-size: 52px;
-        font-weight: 700;
+        font-size: 56px;
+        font-weight: 400;
         margin: 0;
-        line-height: 1.1;
+        line-height: 1.2;
     }
 
     .product-subtitle {
-        font-size: 24px;
-        font-weight: 400;
-        color: #888;
-        margin-top: 10px;
+        font-family: 'Playfair Display', serif;
         font-style: italic;
-    }
-
-    .product-price {
-        font-size: 28px;
-        font-weight: 700;
-        color: #d32f2f;
+        font-size: 24px;
+        color: #666;
+        margin-top: 10px;
+        letter-spacing: 1px;
     }
 
     .hero-section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-        align-items: start;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 
     .hero-image-container {
-        position: relative;
-        text-align: center;
+        width: 100%;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
     .hero-image {
         width: 100%;
-        max-width: 600px;
         height: auto;
-        border-radius: 18px;
-        box-shadow: 0 15px 35px rgba(139, 0, 0, 0.15);
-        transition: transform 0.3s ease;
+        display: block;
+        transition: transform 0.5s ease;
     }
     
-    .hero-image:hover {
-        transform: scale(1.01);
-    }
-
-    .product-details {
-        padding-top: 20px;
-    }
+    .hero-image:hover { transform: scale(1.03); }
 
     .description {
-        font-size: 19px;
-        line-height: 1.7;
+        font-size: 18px;
+        line-height: 1.8;
         color: #444;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
+        text-align: justify;
+        font-family: 'Tinos', serif; 
     }
 
     .back-button {
         display: inline-block;
-        padding: 12px 30px;
-        background: linear-gradient(to right, #b71c1c, #e53935);
+        padding: 12px 35px;
+        background: #8B0000;
         color: white;
         text-decoration: none;
         border-radius: 50px;
         font-size: 18px;
-        font-weight: 400;
-        font-family: 'Tinos', serif;
-        box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
         transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
+        border: 2px solid #8B0000;
+        letter-spacing: 1px;
     }
 
     .back-button:hover {
+        background: transparent;
+        color: #8B0000;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(211, 47, 47, 0.5);
     }
 
-    .related-section {
-        margin-top: 100px;
-    }
-
+    /* --- Related Grid (ปรับระยะห่าง) --- */
+    .related-section { margin-top: 80px; }
+    
     .related-title {
-        font-size: 34px;
-        font-weight: 700;
-        margin-bottom: 40px;
+        font-size: 32px;
+        margin-bottom: 25px; /* เพิ่มระยะห่างหัวข้อ */
+        font-family: 'Chonburi', serif;
     }
 
+    /* --- ส่วนที่แก้ไข: ปรับให้กล่องใหญ่ขึ้นและเต็มพื้นที่ --- */
     .related-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
+        /* เปลี่ยนจาก auto-fill เป็น auto-fit เพื่อให้กล่องยืดจนเต็มแถว */
+        /* และเพิ่มขนาดขั้นต่ำจาก 200px เป็น 240px เพื่อให้กล่องดูใหญ่ขึ้น */
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+        gap: 25px; 
+        padding-bottom: 20px;
     }
 
     .related-card {
-        display: block; 
-        background-color: #ffffff;
-        border-radius: 18px;
-        overflow: hidden;
+        background-color: white; /* เปลี่ยนพื้นหลังเป็นขาวชัดๆ */
+        border-radius: 15px;
+        padding: 30px 20px; /* เพิ่ม Padding บนล่างให้ดูโปร่งขึ้น */
         text-align: center;
-        padding: 30px;
         transition: all 0.3s ease;
         border: 1px solid rgba(139, 0, 0, 0.1);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* เพิ่มเงาให้นูนขึ้น */
         text-decoration: none;
         color: inherit;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* จัดเนื้อหาให้อยู่กึ่งกลางแนวตั้ง */
+        align-items: center;
+        min-height: 200px; /* กำหนดความสูงขั้นต่ำ เพื่อให้ทุกกล่องเท่ากันสวยงาม */
     }
 
     .related-card:hover {
         transform: translateY(-5px);
-        border-color: rgba(139, 0, 0, 0.3);
-        box-shadow: 0 15px 30px rgba(139, 0, 0, 0.1);
+        background: white;
+        box-shadow: 0 15px 30px rgba(139, 0, 0, 0.15);
     }
 
     .related-image {
         width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        background-color: #fce4ec; 
+        height: 140px; 
+        object-fit: cover; 
+        background-color: #eee; 
+        border-radius: 10px;
+        margin-bottom: 15px; /* >>> เพิ่มระยะห่างรูปกับตัวหนังสือ <<< */
     }
 
-    .related-name {
-        font-size: 22px;
-        font-weight: 700;
-        margin: 0 0 10px;
-        color: #8B0000;
+    .amenity-icon {
+        font-size: 26px; 
+        margin-bottom: 10px; /* เพิ่มระยะห่างไอคอน */
+        display: block;
     }
 
-    .related-description {
-        font-size: 16px;
-        color: #666;
+    .related-name { 
+        font-size: 20px; 
+        color: #8B0000; 
+        margin: 0 0 8px 0; /* เพิ่มระยะห่างชื่อห้องกับคำอธิบาย */
+        font-weight: 400;
+        line-height: 1.3;
+    }
+    
+    .related-description { 
+        font-size: 14px; 
+        color: #666; 
+        font-family: 'Tinos', serif; 
+        margin: 0;
+        line-height: 1.5; /* เพิ่มความสูงบรรทัดให้อ่านง่าย */
     }
 
-    /* --- ส่วนแผนที่ --- */
+    /* --- Map Section Style --- */
     .map-section {
-        margin-top: 100px;
-        text-align: center;
-    }
-
-    .map-container {
-        width: 100%;
-        height: 450px;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 15px 35px rgba(139, 0, 0, 0.1);
-        border: 1px solid rgba(139, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
-
-    .map-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 20px;
-    }
-
-    /* --- ส่วน Footer (ติดต่อ + Social) --- */
-    .footer-section {
         margin-top: 80px;
-        padding-top: 50px;
-        border-top: 1px solid rgba(139, 0, 0, 0.1);
-        text-align: center;
-        padding-bottom: 40px;
-    }
-
-    .contact-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 30px;
         margin-bottom: 40px;
     }
-
-    .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 20px;
-        color: #555;
-        text-decoration: none;
-        padding: 10px 20px;
-        background: white;
-        border-radius: 50px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-        border: 1px solid rgba(139, 0, 0, 0.05);
+    
+    .map-frame {
+        width: 100%;
+        height: 400px;
+        border: 0;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border: 5px solid rgba(255,255,255,0.5);
     }
 
-    .contact-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(139, 0, 0, 0.1);
-        color: #b30000;
-        border-color: rgba(139, 0, 0, 0.2);
-    }
-
-    .contact-item svg {
-        width: 24px;
-        height: 24px;
-        fill: #d32f2f;
-    }
-
-    .social-icons-container {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
-        margin-top: 20px;
-        flex-wrap: wrap;
-    }
-
+    /* --- Social Buttons Style --- */
     .social-btn {
         display: flex;
         align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        color: white;
-        text-decoration: none;
-        font-size: 24px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        gap: 10px; /* เพิ่มระยะห่างไอคอนในปุ่ม */
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: 12px 28px; /* ขยายขนาดปุ่มนิดหน่อย */
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        background: rgba(255,255,255,0.6);
+        font-family: 'Playfair Display', serif;
+        font-weight: bold;
     }
-
     .social-btn:hover {
-        transform: translateY(-5px) scale(1.1);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        background: white;
     }
 
-    .social-btn svg {
-        width: 28px;
-        height: 28px;
-        fill: currentColor;
+    @media (max-width: 992px) {
+        .container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 20px;
+        }
+        .big-text-container {
+            position: relative;
+            transform: none;
+            top: auto; right: auto;
+            text-align: center;
+            margin-bottom: -50px;
+            z-index: 0;
+            padding-top: 20px;
+        }
+        .big-text { font-size: 18vw; color: rgba(255,255,255,0.9); text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .big-text span { display: none; }
+        .map-frame { height: 300px; }
+        .contact-details p {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* เพิ่มระยะห่างเบอร์โทรในมือถือ */
+        }
     }
-
-    .bg-tiktok { background-color: #000000; }
-    .bg-facebook { background-color: #1877F2; }
-    .bg-instagram { 
-        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); 
-    }
-
 </style>
+
+<div class="big-text-container" data-aos="fade-left" data-aos-duration="1500">
+    <h1 class="big-text">
+        <span>PRIVATE</span>
+        RESORT
+        <span>& VILLA</span>
+    </h1>
+</div>
 
 <div class="container">
     <div class="product-header">
@@ -293,16 +312,14 @@
             <h1 class="product-title text-gradient-red">ยู.โอเค รีสอร์ท</h1>
             <p class="product-subtitle">U.OK Resort</p>
         </div>
-        <div class="product-price text-gradient-red" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-            เริ่มต้นที่ ฿ 500 / คืน
-        </div>
     </div>
 
     <div class="hero-section">
         <div class="hero-image-container" data-aos="zoom-in" data-aos-duration="1200">
-            <img src="{% static 'images/resort.jpg' %}" alt="ยู.โอเค รีสอร์ท" class="hero-image">
+            <img src="{% static 'images/herbal_factory_main.jpg' %}" alt="ยู.โอเค รีสอร์ท" class="hero-image">
         </div>
-        <div class="product-details" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+        
+        <div class="product-details" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
             <p class="description">
                 รีสอร์ทบรรยากาศร่มรื่น เหมาะสำหรับการพักผ่อนทั้งแบบส่วนตัวและครอบครัว เดินทางสะดวก
                 ตั้งอยู่ใกล้เส้นทางคมนาคมหลัก มีรถสาธารณะผ่านหน้ารีสอร์ท ใกล้ห้างพันทิพย์ ใกล้เดอะมอลล์ งามวงศ์วาน 
@@ -320,110 +337,81 @@
             
             <a href="{% url 'room_detail' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="0">
                 <div class="amenity-icon">🛌</div>
-                <div class="related-image">
-                     <img src="{% static 'images/room_standard.jpg' %}" alt="Single Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                </div>
+                <img src="{% static 'images/room1.jpg' %}" class="related-image" alt="Single Room" onerror="this.style.display='none'"> 
                 <h3 class="related-name">Single Room</h3>
                 <p class="related-description">สะอาด ปลอดภัย พักผ่อนสบาย</p>
             </a>
 
             <a href="{% url 'room_2a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
                 <div class="amenity-icon">🛌</div>
-                <div class="related-image">
-                     <img src="{% static 'images/room_villa.jpg' %}" alt="Superior Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                </div>
+                <img src="{% static 'images/room2.jpg' %}" class="related-image" alt="Superior Room" onerror="this.style.display='none'">
                 <h3 class="related-name">Superior Room</h3>
                 <p class="related-description">วิลล่าส่วนตัวพร้อมสระว่ายน้ำ</p>
             </a>
 
             <a href="{% url 'room_3a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
                 <div class="amenity-icon">🛌</div>
-                <div class="related-image">
-                     <img src="{% static 'images/room_deluxe.jpg' %}" alt="Deluxe Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                </div>
+                <img src="{% static 'images/room3.jpg' %}" class="related-image" alt="Deluxe Room" onerror="this.style.display='none'">
                 <h3 class="related-name">Deluxe Room</h3>
-                <p class="related-description">อาหารอร่อย บรรยากาศดี</p>
+                <p class="related-description">บรรยากาศดี สิ่งอำนวยความสะดวกครบ</p>
             </a>
 
             <a href="{% url 'room_4a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
                 <div class="amenity-icon">🛌</div>
-                <div class="related-image">
-                     <img src="{% static 'images/room_queen.jpg' %}" alt="Queen Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                </div>
+                <img src="{% static 'images/room4.jpg' %}" class="related-image" alt="Queen Room" onerror="this.style.display='none'">
                 <h3 class="related-name">Queen Room</h3>
                 <p class="related-description">ผ่อนคลายร่างกายและจิตใจ</p>
             </a>
 
             <a href="{% url 'room_5a' %}" class="related-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
                 <div class="amenity-icon">🛌</div>
-                <div class="related-image">
-                     <img src="{% static 'images/room_king.jpg' %}" alt="King Room" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-                </div>
+                <img src="{% static 'images/room5.jpg' %}" class="related-image" alt="King Room" onerror="this.style.display='none'">
                 <h3 class="related-name">King Room</h3>
-                <p class="related-description">พายเรือและกิจกรรมสันทนาการ</p>
-            </a>
-
-        </div>
-    </div>
-
-    <div class="map-section">
-        <h2 class="related-title text-gradient-red" data-aos="fade-right">แผนที่และการเดินทาง</h2>
-        
-        <div class="map-container" data-aos="zoom-in" data-aos-duration="1200">
-            <iframe 
-                src="https://maps.google.com/maps?q=U.OK+Resort+Ngamwongwan+8&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-
-        <div class="map-buttons" data-aos="fade-up" data-aos-delay="200">
-            <a href="https://maps.app.goo.gl/5qSMEA9Q7eW2nf3d9" target="_blank" class="back-button">
-                ดูใน Google Maps
+                <p class="related-description">พื้นที่กว้างขวาง</p>
             </a>
         </div>
     </div>
 
-    <div class="footer-section">
-        <h2 class="related-title text-gradient-red" style="font-size: 28px;" data-aos="fade-down">ติดต่อเรา & ติดตามข่าวสาร</h2>
-        
-        <div class="contact-container" data-aos="fade-up" data-aos-duration="1000">
-            <a href="tel:0655183646" class="contact-item">
-                <svg viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
-                065-518-3646
-            </a>
-            
-            <a href="tel:0939395199" class="contact-item">
-                <svg viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
-                093-939-5199
-            </a> 
-
-            <a href="tel:0635159926" class="contact-item">
-                <svg viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
-                063-515-9926
-            </a>
-
-            <a href="mailto:uokresort@gmail.com" class="contact-item">
-                <svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                uokresort@gmail.com
+    <div class="map-section" data-aos="fade-up" data-aos-duration="1200">
+        <h2 class="related-title text-gradient-red" style="margin-bottom: 30px;">แผนที่และการเดินทาง</h2>
+        <p class="description" style="margin-bottom: 20px;">
+            📍 <strong>ที่อยู่:</strong> 224 ซอยงามวงศ์วาน 8 ถนนงามวงศ์วาน ตำบลบางเขน อำเภอเมืองนนทบุรี จังหวัดนนทบุรี 11000
+        </p>
+        <iframe 
+            class="map-frame"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.1554605952134!2d100.5325877758369!3d13.856884194784422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29db949889ac9%3A0x6c01cc1af8e00899!2zVS5PSyBSZXNvcnQ!5e0!3m2!1sth!2sth!4v1716543210000!5m2!1sth!2sth" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div style="margin-top: 15px;">
+            <a href="https://maps.app.goo.gl/3" target="_blank" style="color: #8B0000; text-decoration: underline; font-family: 'Tinos', serif;">
+                เปิดใน Google Maps
             </a>
         </div>
+    </div>
 
-        <div class="social-icons-container" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
-            <a href="https://www.tiktok.com/@u.okresort" target="_blank" class="social-btn bg-tiktok" aria-label="TikTok">
-                <svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z"/></svg>
+    <div class="contact-section" data-aos="fade-up" data-aos-duration="1200" style="margin-top: 60px; margin-bottom: 40px; text-align: center; border-top: 1px solid rgba(139,0,0,0.1); padding-top: 40px;">
+        <h2 class="related-title text-gradient-red">ติดต่อสอบถาม</h2>
+        
+        <div class="contact-details" style="font-size: 18px; color: #444; margin-bottom: 30px;">
+            <p style="margin: 10px 0; line-height: 1.8;">
+                <span style="font-size: 24px;">📞</span> 
+                <a href="tel:0655183646" style="text-decoration: none; color: inherit; font-weight: bold;">065-518-3646</a>, 
+                <a href="tel:0939395199" style="text-decoration: none; color: inherit; font-weight: bold;">093-939-5199</a>, 
+                <a href="tel:0635159926" style="text-decoration: none; color: inherit; font-weight: bold;">063-515-9926</a>
+            </p>
+        </div>
+
+        <div class="social-links" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <a href="https://www.facebook.com/profile.php?id=61575930942400" target="_blank" class="social-btn" style="color: #1877F2; text-decoration: none;">
+                <span style="font-size: 20px;">📘</span> Facebook
             </a>
-
-            <a href="https://www.facebook.com/profile.php?id=61575930942400" target="_blank" class="social-btn bg-facebook" aria-label="Facebook">
-                <svg viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+            <a href="https://www.tiktok.com/@u.okresort?is_from_webapp=1&sender_device=pc" target="_blank" class="social-btn" style="color: #000; text-decoration: none;">
+                <span style="font-size: 20px;">🎵</span> TikTok
             </a>
-
-            <a href="https://www.instagram.com/uok.resort?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-btn bg-instagram" aria-label="Instagram">
-                <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+            <a href="https://www.instagram.com/uok.resort?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-btn" style="color: #E1306C; text-decoration: none;">
+                <span style="font-size: 20px;">📸</span> Instagram
             </a>
         </div>
     </div>
@@ -433,9 +421,9 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init({
-      once: false, /* เล่น Animation ทุกครั้งที่เลื่อนผ่าน */
-      offset: 120, /* ระยะห่างก่อนเริ่ม Animation */
-  });
+      once: false,
+      offset: 50,
+    });
 </script>
 
 {% endblock %}
