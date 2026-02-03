@@ -1,0 +1,19 @@
+/* ใส่ฟอนต์ที่นี่ได้เลย */
+body { 
+    margin: 0; 
+    font-family: 'Tinos', serif;
+}
+
+/* โค้ดกล่องลิ้งค์ (ที่เพิ่งคุยกัน) */
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card-link:hover .feature-card {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
